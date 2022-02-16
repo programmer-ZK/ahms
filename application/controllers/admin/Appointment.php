@@ -37,6 +37,8 @@ class Appointment extends Admin_Controller
     $this->load->view('layout/footer', $data);
   }
 
+  
+
   public function index()
   {
     $this->session->set_userdata('top_menu', 'appointment');

@@ -20,6 +20,12 @@
 			</li>
 
 
+			<li class="treeview <?php echo set_Topmenu('shiftreport'); ?>">
+				<a href="<?php echo base_url(); ?>admin/admin/shiftreport">
+					<i class="fa fa-calendar-check-o"></i> <span>Shift Report</span>
+				</a>
+			</li>
+
 			<?php
 			if ($this->module_lib->hasActive('appointment')) {
 				if (

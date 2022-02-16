@@ -95,7 +95,7 @@ class Appointment_model extends MY_Model
             ->join('appoint_priority', 'appoint_priority.id = appointment.priority', "left")
             ->searchable('patients.patient_name,appointment_payment.paid_amount,appointment.id,appointment.date,patients.mobileno,patients.gender,staff.name,appointment.source,appoint_priority.appoint_priority,appointment.live_consult' . $custom_field_column)
             ->orderable('patients.patient_name,appointment.id,appointment.date,patients.mobileno,patients.gender,staff.name,appointment.source,appoint_priority.appoint_priority,appointment.live_consult' . $custom_field_column . ', appointment_payment.paid_amount')
-            ->sort('appointment.date', 'desc')
+            ->sort('appointment.id', 'desc')
             ->from('appointment');
         return $this->datatables->generate('json');
     }

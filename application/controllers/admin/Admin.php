@@ -587,6 +587,15 @@ class Admin extends Admin_Controller
     redirect('admin/admin/backup');
   }
 
+  public function shiftreport()
+  {
+    $this->session->set_userdata('top_menu', 'shiftreport');
+
+    $this->load->view('layout/header');
+    $this->load->view('admin/shiftreport/index');
+    $this->load->view('layout/footer');
+  }
+
   public function dashboard()
   {
     $this->session->set_userdata('top_menu', 'dashboard');
