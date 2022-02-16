@@ -6,8 +6,14 @@ if (!defined('BASEPATH')) {
 
 class Appointment_model extends MY_Model
 {
+    public function last_token()
+    {
+        $query = $this->db->query("SELECT token_id FROM appointment ORDER BY id DESC LIMIT 1");
+        $ret = $query->row();
+        return $ret->token_id + 1;
+    }
 
-//========================================================================================
+    //========================================================================================
     public function add($appointment)
     {
         $this->db->insert('appointment', $appointment);
@@ -31,10 +37,9 @@ class Appointment_model extends MY_Model
             //return $return_value;
         }
         return $insert_id;
-
     }
 
-//=========================================================================================
+    //=========================================================================================
     public function searchFullText()
     {
         $doctor_restriction = $this->session->userdata['hospitaladmin']['doctor_restriction'];
@@ -61,7 +66,7 @@ class Appointment_model extends MY_Model
 
         $userdata           = $this->customlib->getUserData();
         $doctor_restriction = $this->session->userdata['hospitaladmin']['doctor_restriction'];
-       
+
         $i                         = 1;
         $custom_fields             = $this->customfield_model->get_custom_fields('appointment', 1);
         $custom_field_column_array = array();
@@ -75,7 +80,7 @@ class Appointment_model extends MY_Model
                 $i++;
             }
         }
-         if ($doctor_restriction == 'enabled') {
+        if ($doctor_restriction == 'enabled') {
             if ($userdata["role_id"] == 3) {
                 $this->datatables->where('appointment.doctor', $userdata['id']);
             }
@@ -94,7 +99,7 @@ class Appointment_model extends MY_Model
             ->from('appointment');
         return $this->datatables->generate('json');
     }
-//==========================================================================================
+    //==========================================================================================
 
     public function getMaxId()
     {
@@ -103,7 +108,7 @@ class Appointment_model extends MY_Model
         return $result["maxid"];
     }
 
-//==========================================================================================
+    //==========================================================================================
     public function getDetails($id)
     {
         $this->db->select('appointment.*,staff.name,staff.surname,patients.patient_name as patient_name,patients.gender as gender, patients.email as email, patients.mobileno as mobileno,appoint_priority.appoint_priority');
@@ -126,15 +131,16 @@ class Appointment_model extends MY_Model
         return $query->row_array();
     }
 
-    public function getDetailsAppointment($id,$is_patient=null){
+    public function getDetailsAppointment($id, $is_patient = null)
+    {
 
-    $i=0 ;
-    if($is_patient==1){
-         $custom_fields             = $this->customfield_model->get_custom_fields('appointment','','','',1);
-    }else{
-         $custom_fields             = $this->customfield_model->get_custom_fields('appointment');
-    }
-    
+        $i = 0;
+        if ($is_patient == 1) {
+            $custom_fields             = $this->customfield_model->get_custom_fields('appointment', '', '', '', 1);
+        } else {
+            $custom_fields             = $this->customfield_model->get_custom_fields('appointment');
+        }
+
         $custom_field_column_array = array();
         $field_var_array           = array();
         if (!empty($custom_fields)) {
@@ -146,11 +152,11 @@ class Appointment_model extends MY_Model
                 $i++;
             }
         }
-         
+
         $field_variable      = (empty($field_var_array)) ? "" : "," . implode(',', $field_var_array);
         $custom_field_column = (empty($custom_field_column_array)) ? "" : "," . implode(',', $custom_field_column_array);
-    
-        $this->db->select('appointment.*,blood_bank_products.name as blood_group,appointment_payment.paid_amount, appointment_queue.position as appointment_serial_no, `department`.`department_name`,appointment_payment.note as payment_note,visit_details.opd_details_id,transactions.id as transaction_id ,transactions.payment_mode,transactions.cheque_date , transactions.cheque_no, transactions.amount, transactions.attachment, appoint_priority.appoint_priority,staff.name,staff.surname,staff.employee_id,patients.mobileno as patient_mobileno,patients.email as patient_email,patients.patient_name as patients_name,patients.gender as patients_gender,patients.age,patients.day,patients.month,global_shift.name as global_shift_name,concat(date_format(doctor_shift.start_time,"%h:%i %p")," - ",date_format(doctor_shift.end_time,"%h:%i %p")) as doctor_shift_name'.$field_variable);
+
+        $this->db->select('appointment.*,blood_bank_products.name as blood_group,appointment_payment.paid_amount, appointment_queue.position as appointment_serial_no, `department`.`department_name`,appointment_payment.note as payment_note,visit_details.opd_details_id,transactions.id as transaction_id ,transactions.payment_mode,transactions.cheque_date , transactions.cheque_no, transactions.amount, transactions.attachment, appoint_priority.appoint_priority,staff.name,staff.surname,staff.employee_id,patients.mobileno as patient_mobileno,patients.email as patient_email,patients.patient_name as patients_name,patients.gender as patients_gender,patients.age,patients.day,patients.month,global_shift.name as global_shift_name,concat(date_format(doctor_shift.start_time,"%h:%i %p")," - ",date_format(doctor_shift.end_time,"%h:%i %p")) as doctor_shift_name' . $field_variable);
 
         $this->db->join('transactions', 'appointment.id = transactions.appointment_id', "left");
         $this->db->join('staff', 'appointment.doctor = staff.id', "left");
@@ -160,15 +166,15 @@ class Appointment_model extends MY_Model
         $this->db->join('global_shift', 'global_shift.id = appointment.global_shift_id', 'left');
         $this->db->join('doctor_shift', 'doctor_shift.id = appointment.shift_id', 'left');
         $this->db->join('visit_details', 'visit_details.id = appointment.visit_details_id', 'left');
-        $this->db->join("appointment_payment","appointment_payment.appointment_id=appointment.id","left");
+        $this->db->join("appointment_payment", "appointment_payment.appointment_id=appointment.id", "left");
         $this->db->join('appointment_queue', 'appointment_queue.appointment_id = appointment.id', "left");
-         $this->db->join('blood_bank_products', '`patients`.`blood_bank_product_id` = blood_bank_products.id', "left");
+        $this->db->join('blood_bank_products', '`patients`.`blood_bank_product_id` = blood_bank_products.id', "left");
         $this->db->where('appointment.id', $id);
         $query = $this->db->get('appointment');
         return $query->row_array();
     }
 
-//=========================================================================================
+    //=========================================================================================
     public function update($data)
     {
         $this->db->trans_start(); # Starting Transaction
@@ -228,7 +234,7 @@ class Appointment_model extends MY_Model
         }
     }
 
-//=========================================================================================
+    //=========================================================================================
     public function frontDelete($id)
     {
         $this->db->trans_start(); # Starting Transaction
@@ -253,10 +259,9 @@ class Appointment_model extends MY_Model
 
             return true;
         }
-
     }
 
-//=========================================================================================
+    //=========================================================================================
     public function delete($id, $visit_details_id, $opd_id)
     {
         $this->db->trans_start(); # Starting Transaction
@@ -285,7 +290,6 @@ class Appointment_model extends MY_Model
         } else {
             return true;
         }
-
     }
 
     public function deleteAppointment($id)
@@ -313,14 +317,14 @@ class Appointment_model extends MY_Model
         }
     }
 
-//=========================================================================================
+    //=========================================================================================
     public function getAppointment($id = null)
     {
         $query = $this->db->order_by('id', 'desc')->get('appointment');
         return $query->result_array();
     }
 
-//=========================================================================================
+    //=========================================================================================
     public function status($id, $data)
     {
         $this->db->trans_start(); # Starting Transaction
@@ -422,11 +426,11 @@ class Appointment_model extends MY_Model
         $visit_details['opd_details_id']    = $opd_id;
         $visit_details['patient_charge_id'] = $patient_charge_id;
         $this->db->insert('visit_details', $visit_details);
-        $visit_details_id                      = $this->db->insert_id();        
+        $visit_details_id                      = $this->db->insert_id();
         $transaction_data['case_reference_id'] = $case_id;
         $transaction_data['opd_id']            = $opd_id;
         $transaction_data['amount']            = $doctor_fees;
-        $this->db->update("transactions", $transaction_data, array("appointment_id" => $appointment_id));        
+        $this->db->update("transactions", $transaction_data, array("appointment_id" => $appointment_id));
         $appointment_data['case_reference_id'] = $case_id;
         $appointment_data['visit_details_id']  = $visit_details_id;
         $this->db->update("appointment", $appointment_data, array("id" => $appointment_id));
@@ -448,12 +452,11 @@ class Appointment_model extends MY_Model
             ->row();
         return $result;
     }
-    
+
     public function updateappointmentpayment($appointment_id, $doctor_fees)
-    {        
-        $data['paid_amount'] = $doctor_fees;            
+    {
+        $data['paid_amount'] = $doctor_fees;
         $this->db->where('appointment_id', $appointment_id);
-        $this->db->update('appointment_payment', $data);             
-        
+        $this->db->update('appointment_payment', $data);
     }
 }
