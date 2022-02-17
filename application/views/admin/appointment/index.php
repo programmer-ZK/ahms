@@ -269,8 +269,8 @@ $genderList      = $this->customlib->getGender_Patient();
 		</div>
 	</div>
 </div>
-<!-- dd -->
 
+<!-- Reschedule Appointment Modal -->
 <div class="modal fade" id="rescheduleModal" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content modal-media-content">
@@ -413,6 +413,7 @@ $genderList      = $this->customlib->getGender_Patient();
 	</div>
 </div>
 
+<!-- Show Appointment Modal -->
 <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content modal-media-content">
