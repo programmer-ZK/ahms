@@ -70,7 +70,7 @@ $genderList      = $this->customlib->getGender_Patient();
 <!-- Add Appointment Modal -->
 <div class="modal fade" id="myModal" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content modal-media-content">
+		<div class="modal-content modal-media-content">
 			<div class="modal-header modal-media-header">
 				<button type="button" class="close pt4" data-dismiss="modal">&times;</button>
 				<div class="row">
@@ -132,7 +132,7 @@ $genderList      = $this->customlib->getGender_Patient();
 											<span class="text-danger"><?php echo form_error('doctor_fees'); ?></span>
 										</div>
 									</div>
-									<div class="col-sm-3" style="display: none;">
+									<div class="col-sm-3">
 										<div class="form-group">
 											<label for="pwd"><?php echo $this->lang->line('shift'); ?></label><span class="req"> *</span>
 											<select name="global_shift" id="global_shift" class="select2" style="width:100%">
@@ -182,7 +182,7 @@ $genderList      = $this->customlib->getGender_Patient();
 											<span class="text-danger"><?php echo form_error('apply_charge'); ?></span>
 										</div>
 									</div>
-									<div class="col-sm-3">
+									<div class="col-sm-3" style="display: none;">
 										<div class="form-group">
 											<label for="appointment_status"><?php echo $this->lang->line('status'); ?><small class="req"> *</small></label>
 											<select name="appointment_status" onchange="appointmentstatus()" class="form-control" id="appointment_status">
