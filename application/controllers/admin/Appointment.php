@@ -87,17 +87,9 @@ class Appointment extends Admin_Controller
 
     $this->form_validation->set_rules('date', $this->lang->line('appointment_date'), 'trim|required|xss_clean');
     $this->form_validation->set_rules('doctorid', $this->lang->line('doctor'), 'trim|required|xss_clean');
-    // $this->form_validation->set_rules('amount', $this->lang->line('doctor_fees'), 'trim|required|xss_clean');
     $this->form_validation->set_rules('patient_id', $this->lang->line('patient'), 'trim|required|xss_clean');
-    // $this->form_validation->set_rules('global_shift', $this->lang->line('shift'), 'trim|required');
-    // $this->form_validation->set_rules('slot', $this->lang->line('slot'), 'trim|required|xss_clean');
-    $this->form_validation->set_rules('appointment_status', $this->lang->line('status'), 'trim|required|xss_clean');
-
-    if ($this->input->post("payment_mode") == "Cheque") {
-      $this->form_validation->set_rules('cheque_no', $this->lang->line('cheque_no'), 'trim|required');
-      $this->form_validation->set_rules('cheque_date', $this->lang->line('cheque_date'), 'trim|required');
-      $this->form_validation->set_rules('document', $this->lang->line("document"), 'callback_handle_doc_upload[document]');
-    }
+    $this->form_validation->set_rules('global_shift', $this->lang->line('shift'), 'trim|required');
+    // $this->form_validation->set_rules('appointment_status', $this->lang->line('status'), 'trim|required|xss_clean');
 
     if ($this->form_validation->run() == false) {
       $msg = array(
@@ -150,7 +142,7 @@ class Appointment extends Admin_Controller
         'is_queue'           => 0,
         'live_consult'       => $consult,
         'source'             => 'Offline',
-        'appointment_status' => $this->input->post('appointment_status'),
+        'appointment_status' => "approved",
       );
 
 

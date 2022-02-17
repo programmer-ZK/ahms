@@ -2,21 +2,6 @@
 <?php
 $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 ?>
-
-<style>
-	.token_div {
-		font-size: 34px;
-		margin: auto;
-		width: fit-content;
-	}
-
-	.token_div p {
-		border: 1px solid black;
-		border-radius: 100px;
-		padding: 15px;
-		margin-top: 10px;
-	}
-</style>
 <div class="print-area">
 	<div class="row">
 		<div class="col-md-12">
@@ -35,46 +20,87 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 						<div class="col-md-12" style="padding-top:10px">
 							<table class="noborder_table">
 								<tr>
-									<div class="text-center mt-5 token_div" style="font-size: 34px;">
+									<div class="text-center mt-5" style="font-size: 34px;">
 										<p><?php echo $result['token_id'] ?></p>
 									</div>
 								</tr>
 								<tr>
-									<td>Date</td>
-									<td><?php echo date('d-m-y', strtotime($result["date"])) ?></td>
+									<br>
 								</tr>
-								<tr >
-									<td>Patient</td>
-									<td><span id='patient_name_view'><?php echo $result['patients_name'] ?></span></td>
+								<tr>
+									<div class="text-center mt-5" style="font-size: 34px;">
+										<p><?php echo $result['patients_name'] ?></p>
+									</div>
 								</tr>
 								<tr>
 									<th>Doctor</th>
-									<th>
-										<?php echo $result['name'] . " " . $result['surname']  ?>
-									</th>
+									<td class="text-capitalize"><span id='patient_name_view'><?php echo  $result['name'] . " " . $result['surname']  ?></span></td>
+									<th><?php echo $this->lang->line("age"); ?></th>
+									<td> <?php echo $this->customlib->getPatientAge($result['age'], $result['month'], $result['day']); ?> </td>
 								</tr>
-								<tr><br></tr>
 								<tr>
-									<td>Fees Paid</td>
-									<td><?php if ($result['amount'] != "") {
-												echo  $currency_symbol . '.' . $result['amount'] + 50;
-											} else {
-												echo $currency_symbol . '.' . '0.00';
-											} ?></td>
+									<br>
 								</tr>
-							</table>
-							<hr>
 
-							<table class="noborder_table">
-								<tbody>
-									<tr>
-										<td>Date / Time</td>
-										<td><?php echo date('d-m-y h:i:s A', strtotime($result["date"])) ?></td>
-									</tr>
-								</tbody>
+								<tr>
+									<th><?php echo $this->lang->line('shift'); ?></th>
+									<td><?php echo $result['global_shift_name'] ?></td>
+									<th>Date</th>
+									<td><?php echo $this->customlib->YYYYMMDDHisTodateFormat($result["date"]); ?></td>
+								</tr>
+
+								<tr>
+								</tr>
+
+								<tr>
+									<th></th>
+									<td></td>
+								</tr>
 							</table>
 						</div>
 					</div>
+
+					<hr style="height: 1px; clear: both;margin-bottom: 10px; margin-top: 10px" />
+					<h4 class="font-bold">&nbsp;<?php echo $this->lang->line("payment_details"); ?></h4>
+					<div class="row">
+						<div class="col-md-12">
+							<table class="print-table">
+								<thead>
+									<tr>
+										<td><strong>Amount (Rs)</strong></td>
+										<td></td>
+										<td class="text-right" id="doctor_fees">
+											<?php if ($result['amount'] != "") {
+												echo  $currency_symbol . '.' . $result['amount'];
+											} else {
+												echo $currency_symbol . '.'  . '0.00';
+											} ?> </td>
+									</tr>
+
+								</thead>
+								<tbody>
+									<tr class="line">
+										<td class=""><strong>Service Charges</strong></td>
+										<td></td>
+										<td class="text-right">Rs.50</td>
+									</tr>
+									<tr class="line">
+										<td class=" "><strong>Total</strong></td>
+										<td></td>
+										<td class="text-right" id="doctor_fees">
+											<?php if ($result['amount'] != "") {
+												echo  $currency_symbol . '.' . $result['amount'] + 50;
+											} else {
+												echo $currency_symbol . '.' . '0.00';
+											} ?> </td>
+									</tr>
+								</tbody>
+
+							</table>
+
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>
