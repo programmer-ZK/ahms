@@ -27,26 +27,17 @@ $genderList = $this->customlib->getGender();
                 <thead class="white-space-nowrap">
                   <tr>
                     <th><?php echo $this->lang->line('bill_no'); ?></th>
-                    <th><?php echo $this->lang->line('case_id'); ?></th>
                     <th><?php echo $this->lang->line('reporting_date'); ?></th>
                     <th><?php echo $this->lang->line('patient_name'); ?></th>
                     <th><?php echo $this->lang->line('reference_doctor'); ?></th>
                     <th><?php echo $this->lang->line('note'); ?></th>
-                    <?php
-                    if (!empty($fields)) {
-                      foreach ($fields as $fields_key => $fields_value) {
-                    ?>
-                        <th><?php echo $fields_value->name; ?></th>
-                    <?php
-                      }
-                    }
-                    ?>
+                     
                     <th class=""><?php echo $this->lang->line('amount') . ' (' . $currency_symbol . ')'; ?></th>
-                    <th class=""><?php echo $this->lang->line('paid_amount') . ' (' . $currency_symbol . ')'; ?></th>
-                    <th class="text-right"><?php echo $this->lang->line('balance_amount') . ' (' . $currency_symbol . ')'; ?></th>
+                   
                   </tr>
                 </thead>
                 <tbody>
+
                 </tbody>
               </table>
             </div>
@@ -56,6 +47,7 @@ $genderList = $this->customlib->getGender();
     </div>
   </section>
 </div>
+
 <div class="modal fade" id="assigntestModal" aria-hidden="true" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog pup100" role="document">
     <div class="modal-content modal-media-content">
@@ -96,6 +88,7 @@ $genderList = $this->customlib->getGender();
           <div class="tabinsetbottom pt5">
             <div class="container-fluid">
               <div class="row">
+
                 <div class="col-lg-2 col-md-3 col-sm-4">
                   <label><?php echo $this->lang->line('bill_no'); ?><input readonly name="bill_no" id="billno" type="text" class="transparentbg-border" />
                     <span class="text-danger"><?php echo form_error('bill_no'); ?></span></label>
@@ -427,7 +420,7 @@ $genderList = $this->customlib->getGender();
           $('#taxpercent_' + id).val(res.percentage);
           var stnd_amt = $('#amount_' + id).val();
           var tax_per = $('#taxpercent_' + id).val();
-          var tax_amount = stnd_amt * tax_per / 100;
+          var tax_amount = tax_per;
           $('#taxamount_' + id).val(tax_amount);
           var day = $('#reportday_' + id).val()
           getdate(day, id)
@@ -454,7 +447,7 @@ $genderList = $this->customlib->getGender();
     // var id = total_rows+1;
     total_rows = total_rows + 1;
     var template = $("#testradio-template").html();
-    var div = "<td><input type='hidden' id='total_rows' name='total_rows[]' value='" + total_rows + "'><input type='hidden' name='inserted_id_" + total_rows + "' value='0'><select class='form-control test_name select2' style='width:100%'  onchange='gettestradiodetails(this.value," + total_rows + ")' name='test_name_" + total_rows + "' ><option value='<?php echo set_value('test_name_id'); ?>'><?php echo $this->lang->line('select') ?></option>" + template + "</select></td><td><input type='text' name='reportday_" + total_rows + "' id='reportday_" + total_rows + "'  class='form-control text-right days' readonly></td><td><input type='text' name='reportdate_" + total_rows + "' id='reportdate_" + total_rows + "'  class='form-control text-right report_date'></td><td><div class='input-group'><input type='text' name='taxpercent_" + total_rows + "' id='taxpercent_" + total_rows + "'  class='form-control text-right right-border-none taxpercent' autocomplete='off' readonly><span class='input-group-addon'> %</span></div></td><td><input type='text' name='amount_" + total_rows + "' id='amount_" + total_rows + "'  class='form-control text-right amount' readonly><input type='hidden' name='taxamount_" + total_rows + "' id='taxamount_" + total_rows + "'  class='form-control text-right taxamount' readonly></td>";
+    var div = "<td><input type='hidden' id='total_rows' name='total_rows[]' value='" + total_rows + "'><input type='hidden' name='inserted_id_" + total_rows + "' value='0'><select class='form-control test_name select2' style='width:100%'  onchange='gettestradiodetails(this.value," + total_rows + ")' name='test_name_" + total_rows + "' ><option value='<?php echo set_value('test_name_id'); ?>'><?php echo $this->lang->line('select') ?></option>" + template + "</select></td><td style='display:none;'><input type='text' name='reportday_" + total_rows + "' id='reportday_" + total_rows + "'  class='form-control text-right days' readonly></td><td style='display:none;><input type='text' name='reportdate_" + total_rows + "' id='reportdate_" + total_rows + "'  class='form-control text-right report_date'></td><td  style='display:none;><div class='input-group'><input type='text' name='taxpercent_" + total_rows + "' id='taxpercent_" + total_rows + "'  class='form-control text-right right-border-none taxpercent' autocomplete='off' readonly><span class='input-group-addon'> %</span></div></td><td><input type='text' name='amount_" + total_rows + "' id='amount_" + total_rows + "'  class='form-control text-right amount' readonly><input type='hidden' name='taxamount_" + total_rows + "' id='taxamount_" + total_rows + "'  class='form-control text-right taxamount' readonly></td>";
 
     var row = "<tr id='row" + total_rows + "'>" + div + "<td><button type='button' data-row-id='" + total_rows + "' class='closebtn delete_row'><i class='fa fa-remove'></i></button></td></tr>";
     $('#tableID').append(row);
@@ -473,31 +466,20 @@ $genderList = $this->customlib->getGender();
 
   function addTotal() {
     var total = 0;
-    var total_taxamt = 0;
+    var total_taxamt = 50;
     var medicineTable = $("#assigntestModal .modal-body").find('table.tblProducts');
 
     medicineTable.find("tbody tr").each(function() {
       total += parseFloat($(this).find("td input.amount").val());
-      total_taxamt += parseFloat($(this).find("td input.taxamount").val());
+      // total_taxamt += parseFloat($(this).find("td input.taxamount").val());
     });
     if (total > 0) {
-      var discount_percent = $("#discount_percent").val();
-      if (discount_percent != '') {
-        var discount = (total * discount_percent) / 100;
-        $("#discount").val(discount.toFixed(2));
-      } else {
-        var discount = $("#discount").val();
-
-      }
-
-
-
       $("#total").val(total.toFixed(2));
-      var net_amount = parseFloat(total) + parseFloat(total_taxamt) - parseFloat(discount);
+      var net_amount = parseFloat(total) + parseFloat(total_taxamt);
 
       var cnet_amount = net_amount.toFixed(2)
       $("#net_amount").val(cnet_amount);
-      $("#tax").val(total_taxamt.toFixed(2));
+      $("#tax").val(50);
       $("#payamount").val(cnet_amount);
       $("#amount").val(cnet_amount);
       $("#billsave").show();

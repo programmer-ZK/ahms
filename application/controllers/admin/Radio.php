@@ -303,7 +303,7 @@ class Radio extends Admin_Controller
       if ($custom_fields_value['validation']) {
         $custom_fields_id   = $custom_fields_value['id'];
         $custom_fields_name = $custom_fields_value['name'];
-        $this->form_validation->set_rules("custom_fields[radiology][" . $custom_fields_id . "]", $custom_fields_name, 'trim|required');
+        // $this->form_validation->set_rules("custom_fields[radiology][" . $custom_fields_id . "]", $custom_fields_name, 'trim|required');
       }
     }
     $transaction_data     = array();
@@ -356,7 +356,7 @@ class Radio extends Admin_Controller
           $this->form_validation->set_rules('test_name', $this->lang->line('test_name'), 'trim|required|xss_clean');
         }
         if ($reportdate == "") {
-          $this->form_validation->set_rules('reportdate', $this->lang->line('report_date'), 'trim|required|xss_clean');
+          // $this->form_validation->set_rules('reportdate', $this->lang->line('report_date'), 'trim|required|xss_clean');
         }
       }
     }
@@ -1339,25 +1339,13 @@ class Radio extends Admin_Controller
 
         //==============================
         $row[] = $this->customlib->getSessionPrefixByType('radiology_billing') . $value->id . $action;
-        $row[] = $case_id;
         $row[] = $this->customlib->YYYYMMDDHisTodateFormat($value->date);
         $row[] = $value->patient_name . " (" . $value->pid . ")";
         $row[] = composeStaffNameByString($value->name, $value->surname, $value->employee_id);
         $row[] = $value->note;
         //====================
-        if (!empty($fields)) {
-          foreach ($fields as $fields_key => $fields_value) {
-            $display_field = $value->{"$fields_value->name"};
-            if ($fields_value->type == "link") {
-              $display_field = "<a href=" . $value->{"$fields_value->name"} . " target='_blank'>" . $value->{"$fields_value->name"} . "</a>";
-            }
-            $row[] = $display_field;
-          }
-        }
         //====================
         $row[] = $value->net_amount;
-        $row[] = $value->paid_amount;
-        $row[] = number_format($balance_amount, 2);
 
         $dt_data[] = $row;
       }
