@@ -45,19 +45,7 @@
 				}
 			}
 			?>
-			<?php
-			if ($this->module_lib->hasActive('opd')) {
-				if ($this->rbac->hasPrivilege('opd_patient', 'can_view')) {
-			?>
-					<li class="treeview <?php echo set_Topmenu('OPD_Out_Patient'); ?>">
-						<a href="<?php echo base_url(); ?>admin/patient/search">
-							<i class="fas fa-stethoscope"></i> <span> <?php echo $this->lang->line('opd_out_patient'); ?></span>
-						</a>
-					</li>
-			<?php
-				}
-			}
-			?>
+			
 			<?php
 			if ($this->module_lib->hasActive('ipd')) {
 				if ($this->rbac->hasPrivilege('ipd_patient', 'can_view')) {
