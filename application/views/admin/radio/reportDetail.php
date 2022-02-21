@@ -467,7 +467,7 @@ $genderList = $this->customlib->getGender();
 
   function addTotal() {
     var total = 0;
-    var total_taxamt = 50;
+    var total_taxamt = 0;
     var medicineTable = $("#assigntestModal .modal-body").find('table.tblProducts');
 
     medicineTable.find("tbody tr").each(function() {
@@ -480,7 +480,7 @@ $genderList = $this->customlib->getGender();
 
       var cnet_amount = net_amount.toFixed(2)
       $("#net_amount").val(cnet_amount);
-      $("#tax").val(50);
+      $("#tax").val(total_taxamt.toFixed(2));
       $("#payamount").val(cnet_amount);
       $("#amount").val(cnet_amount);
       $("#billsave").show();

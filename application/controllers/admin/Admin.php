@@ -670,7 +670,6 @@ class Admin extends Admin_Controller
     $userdata                  = $this->customlib->getUserData();
     $data["role"]              = $userdata["user_type"];
     $search_opd_income                    = array('payment_date >=' => date('Y-m-01'), 'payment_date <=' => date("Y-m-t"), 'opd_id !=' => null);
-    $data['opd_income']        = $this->transaction_model->get_monthTransaction($search_opd_income);
     $search_ipd_income                    = array('payment_date >=' => date('Y-m-01'), 'payment_date <=' => date("Y-m-t"), 'ipd_id !=' => null);
     $data['ipd_income']        = $this->transaction_model->get_monthTransaction($search_ipd_income);
     $search_pharmacy_income                    = array('payment_date >=' => date('Y-m-01'), 'payment_date <=' => date("Y-m-t"), 'pharmacy_bill_basic_id !=' => null);
@@ -680,28 +679,22 @@ class Admin extends Admin_Controller
     $search_radiology_income                    = array('payment_date >=' => date('Y-m-01'), 'payment_date <=' => date("Y-m-t"), 'radiology_billing_id !=' => null);
     $data['radiology_income']  = $this->transaction_model->get_monthTransaction($search_radiology_income);
     $search_blood_bank_income                   = array('payment_date >=' => date('Y-m-01'), 'payment_date <=' => date("Y-m-t"), 'blood_issue_id !=' => null);
-    $data['blood_bank_income'] = $this->transaction_model->get_monthTransaction($search_blood_bank_income);
-    $search_ambulance_income                   = array('payment_date >=' => date('Y-m-01'), 'payment_date <=' => date("Y-m-t"), 'ambulance_call_id !=' => null);
 
-    $data['ambulance_income']  = $this->transaction_model->get_monthTransaction($search_ambulance_income);
     $month_expences            = $this->expense_model->getTotalExpenseBwdate(date('Y-m-01'), date('Y-m-t'));
     $data['expences']          = $month_expences->amount;
     $where_date                = array('date >=' => date('Y-m-01'), 'date <=' => date('Y-m-t'));
 
     $data['general_income'] = $this->income_model->getTotal($where_date);
     $parameter              = array(
-      'opd'        => $data['opd_income'],
       'ipd'        => $data['ipd_income'],
       'pharmacy'   => $data['pharmacy_income'],
       'pathology'  => $data['pathology_income'],
       'radiology'  => $data['radiology_income'],
-      'blood_bank' => $data['blood_bank_income'],
-      'ambulance'  => $data['ambulance_income'],
       'general'    => $data['general_income'],
     );
 
-    $label  = array($this->lang->line('opd'), $this->lang->line('ipd'), $this->lang->line('pharmacy'), $this->lang->line('pathology'), $this->lang->line('radiology'), $this->lang->line('blood_bank'), $this->lang->line('ambulance'), $this->lang->line('income'));
-    $module = array('opd', 'ipd', 'pharmacy', 'pathology', 'radiology', 'blood_bank', 'ambulance', 'income');
+    $label  = array($this->lang->line('ipd'), $this->lang->line('pharmacy'), $this->lang->line('pathology'), $this->lang->line('radiology'),   $this->lang->line('income'));
+    $module = array('ipd', 'pharmacy', 'pathology', 'radiology', 'income');
 
     $tot_data = array_sum($parameter);
     $jsonarr  = array();

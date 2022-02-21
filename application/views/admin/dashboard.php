@@ -55,33 +55,7 @@
     </div>
     <!--./row-->
     <div class="row">
-      <?php
-      if ($this->module_lib->hasActive('opd')) {
-        if ($this->rbac->hasPrivilege('opd_income_widget', 'can_view')) {
-      ?>
-          <div class="col-lg-2 col-md-3 col-sm-6 col20
-                         ">
-            <div class="info-box" title="<?php echo $this->lang->line('opd_income'); ?>">
-              <a href="<?php echo site_url('admin/patient/search') ?>">
-                <span class="info-box-icon bg-green"><i class="fas fa-stethoscope"></i></span>
-                <div class="info-box-content">
-                  <span class="info-box-text"><?php echo $this->lang->line('opd_income'); ?></span>
-                  <span class="info-box-number"><?php
-                                                if (!empty($opd_income)) {
-                                                  echo $currency_symbol . $opd_income;
-                                                } else {
-                                                  echo "0";
-                                                }
-                                                ?></span>
-                </div>
-              </a>
-            </div>
-          </div>
-          <!--./col-lg-2-->
-      <?php
-        }
-      }
-      ?>
+      
       <?php
       if ($this->module_lib->hasActive('ipd')) {
         if ($this->rbac->hasPrivilege('ipd_income_widget', 'can_view')) {
@@ -185,7 +159,7 @@
         }
       }
       ?>
-      
+
       <?php if ($this->module_lib->hasActive('income')) {
         if ($this->rbac->hasPrivilege('general_income_widget', 'can_view')) {
       ?>
@@ -195,13 +169,14 @@
                 <span class="info-box-icon bg-green"><i class="fas fa-money-bill-wave"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text"><?php echo $this->lang->line('general_income'); ?></span>
-                  <span class="info-box-number"><?php
-                                                if (!empty($general_income)) {
-                                                  echo $currency_symbol . $general_income;
-                                                } else {
-                                                  echo "0";
-                                                }
-                                                ?></span>
+                  <span class="info-box-number">
+                    <?php
+                    if (!empty($general_income)) {
+                      echo $currency_symbol . $general_income;
+                    } else {
+                      echo "0";
+                    }
+                    ?></span>
                 </div>
               </a>
             </div>
