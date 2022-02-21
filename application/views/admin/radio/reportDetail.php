@@ -230,6 +230,7 @@ $genderList = $this->customlib->getGender();
     </div>
   </div>
 </div>
+
 <div class="modal fade" id="addPaymentModal" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog pup100" role="document">
     <div class="modal-content modal-media-content">

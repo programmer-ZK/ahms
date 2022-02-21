@@ -13,7 +13,6 @@ $amount = 0;
                       echo base_url() . $print_details[0]['print_header'] . img_time();
                     }
                     ?>" class="img-responsive" style="height:100px; width: 100%;">
-          <!-- <img src="/ahms/uploads/printing/17.png" class="img-responsive" style="height:100px; width: 100%;"> -->
         </div>
       <?php } ?>
       <div class="card">
@@ -38,8 +37,7 @@ $amount = 0;
                 <thead>
                   <tr class="line">
                     <td><strong>#</strong></td>
-                    <td class="text-left"><strong><?php echo $this->lang->line('test_name'); ?></strong></td>
-                    <td class="text-center"><strong><?php echo $this->lang->line('date'); ?></strong></td>
+                    <td colspan="2" class="text-left"><strong><?php echo $this->lang->line('test_name'); ?></strong></td>
                     <td class="text-right"><strong><?php echo $this->lang->line('tax'); ?> </strong></td>
                     <td class="text-right"><strong><?php echo $this->lang->line('amount') . ' (' . $currency_symbol . ')'; ?></strong></td>
                   </tr>
@@ -59,8 +57,7 @@ $amount = 0;
                   ?>
                     <tr>
                       <td><?php echo $row_counter; ?></td>
-                      <td><strong><?php echo $report_value->test_name; ?></strong></td>
-                      <td class="text-center"><?php echo  $this->customlib->YYYYMMDDTodateFormat($report_value->reporting_date); ?></td>
+                      <td colspan="2"><strong><?php echo $report_value->test_name; ?></strong></td>
                       <td class="text-right">
                         <?php echo $report_value->tax_percentage; ?></td>
                       <td class="text-right">
