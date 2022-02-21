@@ -316,8 +316,6 @@ class Appointment extends Admin_Controller
       $result['appointment_no'] = $this->customlib->getSessionPrefixByType('appointment') . $id;
     }
 
-
-
     $result["patients_name"]       = composePatientName($result['patients_name'], $result['patient_id']);
     $result["edit_live_consult"]   = $this->lang->line($result['live_consult']);
     $result["live_consult"]        = $result['live_consult'];

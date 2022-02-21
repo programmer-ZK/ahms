@@ -20,7 +20,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 						<div class="col-md-12" style="padding-top:10px">
 							<table class="noborder_table">
 								<tr>
-									<div class="text-center mt-5" style="font-size: 34px;">
+									<div class="text-center mt-5" style="font-size: 60px; font-weight: bolder;">
 										<p><?php echo $result['token_id'] ?></p>
 									</div>
 								</tr>
@@ -93,6 +93,12 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 											} else {
 												echo $currency_symbol . '.' . '0.00';
 											} ?> </td>
+									</tr>
+									<tr>
+										<th>Printed By:</th>
+										<td class="text-capitalize">
+										<?php echo $this->customlib->getAdminSessionUserName(); ?>
+										</td>
 									</tr>
 								</tbody>
 
