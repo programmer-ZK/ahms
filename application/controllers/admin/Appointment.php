@@ -151,14 +151,14 @@ class Appointment extends Admin_Controller
 
             $payment_data = array(
                 'appointment_id' => $insert_id,
-                'paid_amount'    => $this->input->post('amount'),
+                'paid_amount'    => $this->input->post('amount') + 50,
                 'charge_id'      => $this->input->post('charge_id'),
                 'payment_type'   => 'Offline',
                 'date'           => date("Y-m-d H:i:s"),
             );
             $payment_section   = $this->config->item('payment_section');
             $transaction_array = array(
-                'amount'         => $this->input->post("amount"),
+                'amount'         => $this->input->post("amount") + 50,
                 'patient_id'     => $patient_id,
                 'section'        => $payment_section['appointment'],
                 'type'           => 'payment',
