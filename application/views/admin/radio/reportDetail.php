@@ -467,7 +467,7 @@ $genderList = $this->customlib->getGender();
 
   function addTotal() {
     var total = 0;
-    var total_taxamt = 50;
+    var total_taxamt = 0;
     var medicineTable = $("#assigntestModal .modal-body").find('table.tblProducts');
 
     medicineTable.find("tbody tr").each(function() {

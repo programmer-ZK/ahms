@@ -107,7 +107,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 					</div>
 					<div class="col-sm-6">
 						<table class="printablea4">
-							<tr>
+							<tr style="display: none;">
 								<th width="40%"><?php echo "Test's Amount" . " (" . $currency_symbol . ")"; ?></th>
 								<td width="60%" colspan="2" class="text-right ipdbilltable">
 									<input type="text" placeholder="Total" value="0" name="total" id="total" style="width: 30%; float: right" class="form-control total" />
@@ -124,14 +124,14 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 									<input type="text" placeholder="Discount" value="0" name="discount" id="discount" style="width: 50%; float: right" class="form-control discount" />
 								</td>
 							</tr>
-							<tr>
+							<tr style="display: none;">
 								<th><?php echo "Service Charges" . " (" . $currency_symbol . ")"; ?></th>
 								<td></td>
 								<td class="text-right ipdbilltable">
 									<input type="text" placeholder="Tax" name="tax" value="50" id="tax" style="width: 50%; float: right" class="form-control tax" />
 								</td>
 							</tr>
-							<tr  >
+							<tr>
 								<th><?php echo "Total Amount" . " (" . $currency_symbol . ")"; ?></th>
 								<td colspan="2" class="text-right ipdbilltable">
 									<input type="text" placeholder="Net Amount" value="0" name="net_amount" id="net_amount" style="width: 30%; float: right" class="form-control net_amount" />
