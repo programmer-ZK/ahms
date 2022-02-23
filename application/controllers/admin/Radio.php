@@ -410,7 +410,7 @@ class Radio extends Admin_Controller
       }
       $array = array('status' => 'fail', 'error' => $error_msg, 'message' => '');
     } else {
-
+      $last_token        = $this->radio_model->last_token();
       $patient_id        = $this->input->post('patientid');
       $bill_date         = $this->customlib->dateFormatToYYYYMMDDHis($this->input->post('date'));
       $doctor_name       = $this->input->post('doctor_name');
@@ -433,6 +433,7 @@ class Radio extends Admin_Controller
       $data = array(
         'date'                      => ($bill_date),
         'patient_id'                => $patient_id,
+        'token_id'                  => $last_token,
         'doctor_name'               => $doctor_name,
         'doctor_id'                 => $doctor_id,
         'case_reference_id'         => $case_reference_id,
@@ -1267,6 +1268,7 @@ class Radio extends Admin_Controller
     $page           = $this->load->view('admin/radio/_getRadiologyReportDetails', $data, true);
     echo json_encode(array('status' => 1, 'page' => $page));
   }
+
 
   public function assigntestradio()
   {

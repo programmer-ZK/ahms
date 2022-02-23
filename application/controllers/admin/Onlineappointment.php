@@ -42,7 +42,7 @@ class Onlineappointment extends Admin_Controller
             $charges                    = $this->charge_model->getChargeByChargeId($data['charge_id']);
             $data['standard_charge']    = isset($charges['standard_charge']) ? $charges['standard_charge'] : 0;
             $data['percentage']         = isset($charges['percentage']) ? $charges['percentage'] : 0;
-            $data['appointment_charge'] = $data['standard_charge'] + ($data['standard_charge'] * $data['percentage'] / 100);
+            $data['appointment_charge'] = $data['standard_charge'];
             $data['duration']           = isset($doc_data['consult_duration']) ? $doc_data['consult_duration'] : "";
             $this->load->view('admin/onlineappointment/index', $data);
             $this->load->view('layout/footer');
@@ -260,7 +260,7 @@ class Onlineappointment extends Admin_Controller
     {
         $doctor_id = $this->input->get("doctor");
         $date      = $this->input->get("date");
-        if ($date != "null") { 
+        if ($date != "null") {
             $date = $this->customlib->dateFormatToYYYYMMDD($date);
         }
         $dt_response = $this->onlineappointment_model->getPatientSchedule($doctor_id, $date);
@@ -279,7 +279,7 @@ class Onlineappointment extends Admin_Controller
                 $row[] = $value->mobileno;
                 $row[] = $value->time != '' ? date("h:i A", strtotime($value->time)) : "Offline";
                 $row[] = $value->email;
-                $row[] = $this->customlib->YYYYMMDDHisTodateFormat($value->date, $this->time_format); 
+                $row[] = $this->customlib->YYYYMMDDHisTodateFormat($value->date, $this->time_format);
                 $row[]     = $value->source;
                 $dt_data[] = $row;
             }
@@ -483,7 +483,6 @@ class Onlineappointment extends Admin_Controller
             }
         }
         echo json_encode($data);
-
     }
 
     public function doctorGlobalShift()
@@ -588,16 +587,17 @@ class Onlineappointment extends Admin_Controller
         echo json_encode($shift);
     }
 
-    public function getShiftById(){
+    public function getShiftById()
+    {
         $shift_id = $this->input->post("id");
         $date = $this->customlib->dateFormatToYYYYMMDDHis($this->input->post("date"));
         $shift = $this->onlineappointment_model->getShiftById($shift_id);
-        $end_time = date("Y-m-d",strtotime($date))." ".$shift['end_time'];
-        $end_time = date("Y-m-d H:i:s" ,strtotime($end_time));
+        $end_time = date("Y-m-d", strtotime($date)) . " " . $shift['end_time'];
+        $end_time = date("Y-m-d H:i:s", strtotime($end_time));
         $current_time = date("Y-m-d H:i:s");
-        if($current_time>$end_time){
+        if ($current_time > $end_time) {
             echo json_encode(array("status" => 1));
-        }else{
+        } else {
             echo json_encode(array("status" => 0));
         }
     }
