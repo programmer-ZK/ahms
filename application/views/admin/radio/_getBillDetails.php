@@ -24,6 +24,7 @@ $amount = 0;
               
               <p><span class="font-bold"><?php echo $this->lang->line("age"); ?> :</span> <?php echo $this->customlib->getPatientAge($result->age, $result->month, $result->day); ?></p>
               <p><span class="font-bold"><?php echo $this->lang->line("gender"); ?> :</span> <?php echo $result->gender; ?></p>
+              <p><span class="font-bold"><?php echo $this->lang->line("doctor"); ?> :</span> <?php echo $result->doctor_name; ?></p>
 
             </div>
             <div class="col-md-6 text-right">

@@ -50,7 +50,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
     </div>
     <div class="col-md-3">
       <table class="table table-hover table-sm">
-        <tr>
+        <tr style="display: none;">
           <th><label><?php echo $this->lang->line('total'); ?></label></th>
           <td class="text text-right"><?php if (!empty($result->total)) {
                                         echo $currency_symbol . $result->total;
@@ -61,7 +61,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
           <th><label><?php echo $this->lang->line('discount'); ?></label></th>
           <td class="text text-right"><?php echo $currency_symbol . $result->discount ?></td>
         </tr>
-        <tr>
+        <tr style="display: none;">
           <th><label><?php echo $this->lang->line('tax'); ?></label></th>
           <td class="text text-right"><?php echo $currency_symbol . $result->tax ?></td>
         </tr>
@@ -97,7 +97,6 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
             <td class="text-left"><strong><?php echo $this->lang->line('sample_collected'); ?></strong></td>
             <td class="text-center"><strong><?php echo $this->lang->line('expected_date'); ?></strong></td>
             <td class="text-left"><strong><?php echo  $this->lang->line('approved_by') . " / " . $this->lang->line('update_date'); ?></strong></td>
-            <td class="text-right"><strong><?php echo $this->lang->line('tax'); ?></strong></td>
             <td class="text-right"><strong><?php echo $this->lang->line('amount'); ?></strong></td>
             <td class="text-right"><strong><?php echo $this->lang->line('action'); ?></strong></td>
           </tr>
@@ -130,7 +129,6 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                 ?><label for=""><?php echo $this->lang->line('approved_by'); ?> : </label><?php echo composeStaffNameByString($report_value->approved_by_staff_name, $report_value->approved_by_staff_surname, $report_value->approved_by_staff_employee_id);       ?> <br /><?php echo  $this->customlib->YYYYMMDDTodateFormat($report_value->parameter_update);
                                                                                                                                                                                                                                                                             } ?>
               </td>
-              <td class="text-right"><?php echo $currency_symbol . $taxamount; ?></td>
               <td class="text-right"><?php echo $currency_symbol . $report_value->apply_charge; ?></td>
               <td class="text-right">
                 <?php
