@@ -17,25 +17,46 @@ $amount = 0;
       <?php } ?>
       <div class="card">
         <div class="card-body">
-          <div class="row">
-            <div>
+          <table class="noborder_table">
+            <tr>
               <div class="text-center mt-5" style="font-size: 60px; font-weight: bolder;">
                 <p><?php echo $result->token_id ?></p>
               </div>
-            </div>
-            <div class="col-md-6">
-              <p><span class="font-bold"><?php echo $this->lang->line("bill_no"); ?> :</span> <?php echo $bill_prefix . $result->id; ?></p>
-              <p><span class="font-bold"><?php echo $this->lang->line('patient'); ?>:</span> <?php echo composePatientName($result->patient_name, $result->patient_id); ?></p>
+            </tr>
+            <tr>
+              <br>
+            </tr>
+            <tr>
+              <div class="text-center mt-5" style="font-size: 34px;">
+                <p><?php echo composePatientName($result->patient_name, $result->patient_id) ?></p>
+              </div>
+            </tr>
+            <tr>
+              <th>Doctor</th>
+              <td class="text-capitalize"><span id='patient_name_view'><?php echo  $result->doctor_name;  ?></span></td>
+              <th><?php echo $this->lang->line("age"); ?></th>
+              <td> <?php echo $this->customlib->getPatientAge($result->age, $result->month, $result->day); ?> </td>
+            </tr>
+            <tr>
+              <br>
+            </tr>
 
-              <p><span class="font-bold"><?php echo $this->lang->line("age"); ?> :</span> <?php echo $this->customlib->getPatientAge($result->age, $result->month, $result->day); ?></p>
-              <p><span class="font-bold"><?php echo $this->lang->line("gender"); ?> :</span> <?php echo $result->gender; ?></p>
-              <p><span class="font-bold"><?php echo $this->lang->line("doctor"); ?> :</span> <?php echo $result->doctor_name; ?></p>
+            <tr>
+              <th><?php echo $this->lang->line('bill_no'); ?></th>
+              <td><?php echo $bill_prefix . $result->id ?></td>
+              <th>Date</th>
+              <td><?php echo $this->customlib->YYYYMMDDHisTodateFormat($result->date, $this->customlib->getHospitalTimeFormat()); ?></td>
+            </tr>
 
-            </div>
-            <div class="col-md-6 text-right">
-              <p><span class="font-bold"><?php echo $this->lang->line('date'); ?>: </span> <?php echo $this->customlib->YYYYMMDDHisTodateFormat($result->date, $this->customlib->getHospitalTimeFormat()); ?></p>
-            </div>
-          </div>
+            <tr>
+            </tr>
+
+            <tr>
+              <th></th>
+              <td></td>
+            </tr>
+          </table>
+
           <div class="row">
             <div class="col-md-12">
               <table class="print-table">
