@@ -17,20 +17,46 @@ $amount = 0;
       <?php } ?>
       <div class="card">
         <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-              <p><span class="font-bold"><?php echo $this->lang->line("bill_no"); ?> :</span> <?php echo $bill_prefix . $result->id; ?></p>
-              <p><span class="font-bold"><?php echo $this->lang->line('patient'); ?>:</span> <?php echo composePatientName($result->patient_name, $result->patient_id); ?></p>
-              <p><span class="font-bold"><?php echo $this->lang->line('case_id'); ?> :</span> <?php echo $result->case_reference_id; ?></p>
-              <p><span class="font-bold"><?php echo $this->lang->line('prescription_no'); ?> :</span> <?php echo $prescription; ?></p>
-              <p><span class="font-bold"><?php echo $this->lang->line("age"); ?> :</span> <?php echo $this->customlib->getPatientAge($result->age, $result->month, $result->day); ?></p>
-              <p><span class="font-bold"><?php echo $this->lang->line("gender"); ?> :</span> <?php echo $result->gender; ?></p>
+          <table class="noborder_table">
+            <tr>
+              <div class="text-center mt-5" style="font-size: 60px; font-weight: bolder;">
+                <p><?php echo $result->token_id ?></p>
+              </div>
+            </tr>
+            <tr>
+              <br>
+            </tr>
+            <tr>
+              <div class="text-center mt-5" style="font-size: 34px;">
+                <p><?php echo composePatientName($result->patient_name, $result->patient_id) ?></p>
+              </div>
+            </tr>
+            <tr>
+              <th>Doctor</th>
+              <td class="text-capitalize"><span id='patient_name_view'><?php echo  $result->doctor_name;  ?></span></td>
+              <th><?php echo $this->lang->line("age"); ?></th>
+              <td> <?php echo $this->customlib->getPatientAge($result->age, $result->month, $result->day); ?> </td>
+            </tr>
+            <tr>
+              <br>
+            </tr>
 
-            </div>
-            <div class="col-md-6 text-right">
-              <p><span class="font-bold"><?php echo $this->lang->line('date'); ?>: </span> <?php echo $this->customlib->YYYYMMDDHisTodateFormat($result->date, $this->customlib->getHospitalTimeFormat()); ?></p>
-            </div>
-          </div>
+            <tr>
+              <th><?php echo $this->lang->line('bill_no'); ?></th>
+              <td><?php echo $bill_prefix . $result->id ?></td>
+              <th>Date</th>
+              <td><?php echo $this->customlib->YYYYMMDDHisTodateFormat($result->date, $this->customlib->getHospitalTimeFormat()); ?></td>
+            </tr>
+
+            <tr>
+            </tr>
+
+            <tr>
+              <th></th>
+              <td></td>
+            </tr>
+          </table>
+
           <div class="row">
             <div class="col-md-12">
               <table class="print-table">
@@ -38,8 +64,7 @@ $amount = 0;
                   <tr class="line">
                     <td><strong>#</strong></td>
                     <td colspan="2" class="text-left"><strong><?php echo $this->lang->line('test_name'); ?></strong></td>
-                    <td class="text-right"><strong><?php echo $this->lang->line('tax'); ?> </strong></td>
-                    <td class="text-right"><strong><?php echo $this->lang->line('amount') . ' (' . $currency_symbol . ')'; ?></strong></td>
+                    <td colspan="2" class="text-right"><strong><?php echo $this->lang->line('amount') . ' (' . $currency_symbol . ')'; ?></strong></td>
                   </tr>
                 </thead>
                 <tbody>
@@ -58,9 +83,8 @@ $amount = 0;
                     <tr>
                       <td><?php echo $row_counter; ?></td>
                       <td colspan="2"><strong><?php echo $report_value->test_name; ?></strong></td>
-                      <td class="text-right">
-                        <?php echo $report_value->tax_percentage; ?></td>
-                      <td class="text-right">
+
+                      <td colspan="2" class="text-right">
                         <?php echo $report_value->apply_charge; ?>
                       </td>
                     </tr>
@@ -79,12 +103,12 @@ $amount = 0;
                     <td class="text-right no-line"><strong><?php echo $this->lang->line('discount'); ?></strong></td>
                     <td class="text-right no-line"><strong><?php echo "(" . $result->discount_percentage . "%) " . $currency_symbol . amountFormat($result->discount); ?></strong></td>
                   </tr>
-                  <tr>
+                  <tr style="display: none;">
                     <td colspan="3" class="no-line"></td>
                     <td class="text-right no-line"><strong><?php echo $this->lang->line('tax'); ?></strong></td>
                     <td class="text-right no-line"><strong><?php echo $currency_symbol . "" . amountFormat($tax_amt); ?></strong></td>
                   </tr>
-                  <tr>
+                  <tr style="display: none;">
                     <td colspan="3" class="no-line"></td>
                     <td class="text-right no-line"><strong><?php echo $this->lang->line('net_amount'); ?></strong></td>
                     <td class="text-right no-line"><strong><?php echo $currency_symbol . "" . amountFormat($result->net_amount); ?></strong></td>

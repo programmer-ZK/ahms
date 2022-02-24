@@ -71,7 +71,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 										<td></td>
 										<td class="text-right" id="doctor_fees">
 											<?php if ($result['amount'] != "") {
-												echo  $currency_symbol . '.' . $result['amount'];
+												echo  $currency_symbol . '.' . $result['amount'] - 50;
 											} else {
 												echo $currency_symbol . '.'  . '0.00';
 											} ?> </td>
@@ -89,7 +89,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 										<td></td>
 										<td class="text-right" id="doctor_fees">
 											<?php if ($result['amount'] != "") {
-												echo  $currency_symbol . '.' . $result['amount'] + 50;
+												echo  $currency_symbol . '.' . $result['amount'];
 											} else {
 												echo $currency_symbol . '.' . '0.00';
 											} ?> </td>
@@ -97,7 +97,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 									<tr>
 										<th>Printed By:</th>
 										<td class="text-capitalize">
-										<?php echo $this->customlib->getAdminSessionUserName(); ?>
+											<?php echo $this->customlib->getAdminSessionUserName(); ?>
 										</td>
 									</tr>
 								</tbody>
