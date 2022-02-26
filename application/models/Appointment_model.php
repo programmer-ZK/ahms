@@ -2,7 +2,7 @@
 
 if (!defined('BASEPATH')) {
   exit('No direct script access allowed');
-}
+} 
 
 class Appointment_model extends MY_Model
 {
@@ -27,7 +27,7 @@ class Appointment_model extends MY_Model
     // return $this->db->insert_id();
     $insert_id = $this->db->insert_id();
     $message   = INSERT_RECORD_CONSTANT . " On Appointment Created " . $insert_id;
-
+    
     $action    = "Insert";
     $record_id = $insert_id;
     $this->log($message, $record_id, $action);
