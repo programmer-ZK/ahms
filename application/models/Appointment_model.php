@@ -181,6 +181,22 @@ class Appointment_model extends MY_Model
     return $query->row_array();
   }
 
+  public function getDetailsShiftReport($doctor_id, $date)
+  {
+    if ($doctor_id != "null") {
+      $this->db->where("appointment.doctor", $doctor_id);
+    }
+    if ($date != "null") {
+      $this->datatables->where("date_format(appointment.date,'%Y-%m-%d')", $date);
+    }
+    $this->db->select("(SELECT SUM(appointment_payment.paid_amount)) AS total,  COUNT(appointment.id) AS NumOfApp, staff.name , staff.surname, Date_format(appointment.created_at, '%Y-%m-%d') AS date ");
+    $this->db->join("appointment_payment", "appointment_payment.appointment_id = appointment.id");
+    $this->db->join("staff ", "staff.id = appointment.doctor");
+    $this->db->where("appointment.appointment_status", "approved");
+    $query = $this->db->get('appointment');
+    return $query->row_array();
+  }
+
   //=========================================================================================
   public function update($data)
   {

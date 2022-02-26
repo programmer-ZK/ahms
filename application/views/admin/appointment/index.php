@@ -20,7 +20,6 @@ $genderList      = $this->customlib->getGender_Patient();
 								<a data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm addappointment"> <i class="fa fa-plus"></i> <?php echo $this->lang->line('add_appointment'); ?></a>
 							<?php } ?>
 							<a href="<?php echo base_url("admin/onlineappointment/patientschedule"); ?>" class="btn btn-primary btn-sm"><i class="fa fa-reorder"></i> <?php echo $this->lang->line('doctor_wise'); ?></a>
-							<a href="<?php echo base_url("admin/onlineappointment/patientqueue"); ?>" class="btn btn-primary btn-sm"><i class="fa fa-reorder"></i> <?php echo $this->lang->line('queue'); ?></a>
 						</div>
 					</div><!-- /.box-header -->
 					<div class="box-body">
@@ -778,6 +777,7 @@ $genderList      = $this->customlib->getGender_Patient();
 
 		return true;
 	}
+	
 	$(document).ready(function(e) {
 		$("#formedit").on('submit', (function(e) {
 			$("#formeditbtn").button('loading');
