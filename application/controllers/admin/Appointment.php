@@ -128,14 +128,15 @@ class Appointment extends Admin_Controller
       $patient_id   = $this->input->post('patient_id');
       $consult      = $this->input->post('live_consult');
       $cheque_date  = $this->customlib->dateFormatToYYYYMMDD($this->input->post("cheque_date"));
-      $last_token = $this->appointment_model->last_token();
+      $doc_id = $this->input->post('doctorid');
+      $last_token = $this->appointment_model->last_token($doc_id);
 
       $appointment = array(
         'patient_id'         => $patient_id,
         'token_id'           => $last_token,
         'date'               => $date_appoint,
         'priority'           => $this->input->post('priority'),
-        'doctor'             => $this->input->post('doctorid'),
+        'doctor'             => $doc_id,
         'message'            => $this->input->post('message'),
         'global_shift_id'    => $this->input->post('global_shift'),
         'shift_id'           => $this->input->post('slot'),
@@ -344,7 +345,7 @@ class Appointment extends Admin_Controller
       $date = $this->customlib->dateFormatToYYYYMMDD($date);
     }
     $result = $this->appointment_model->getDetailsShiftReport($doctor_id, $date);
-    
+
     $data['result']                =  $result;
     $page = $this->load->view('patient/printShiftReport', $data, true);
     echo json_encode(array('status' => 1, 'page' => $page));

@@ -6,9 +6,9 @@ if (!defined('BASEPATH')) {
 
 class Appointment_model extends MY_Model
 {
-  public function last_token()
+  public function last_token($doc_id)
   {
-    $query = $this->db->query("SELECT token_id, created_at FROM appointment ORDER BY id DESC LIMIT 1");
+    $query = $this->db->query("SELECT token_id, created_at FROM appointment Where doctor = '$doc_id' ORDER BY id DESC LIMIT 1");
     $ret = $query->row();
     $created_at = $ret->created_at;
     $token = $ret->token_id;
