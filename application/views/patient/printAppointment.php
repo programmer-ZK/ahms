@@ -96,7 +96,8 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 									</tr>
 									<tr>
 										<th>Printed By:</th>
-										<td class="text-capitalize">
+										<td></td>
+										<td class="text-capitalize text-right">
 											<?php echo $this->customlib->getAdminSessionUserName(); ?>
 										</td>
 									</tr>

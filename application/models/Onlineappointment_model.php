@@ -15,7 +15,7 @@ class Onlineappointment_model extends MY_Model
         $result = $query->result();
         return $result;
     }
-    
+
     public function getShiftByDoctor($doctor)
     {
         $this->db->select("staff_id as doctor_id,day,start_time,end_time");
@@ -24,7 +24,7 @@ class Onlineappointment_model extends MY_Model
         $result = $query->result();
         return $result;
     }
-    
+
     public function add($delete_array, $insert_array, $update_array)
     {
         $this->db->trans_start();
@@ -49,7 +49,7 @@ class Onlineappointment_model extends MY_Model
             return true;
         }
     }
-    
+
     public function getShiftById($id)
     {
         $this->db->select("start_time, end_time");
@@ -58,7 +58,7 @@ class Onlineappointment_model extends MY_Model
         $result = $query->row_array();
         return $result;
     }
-    
+
     public function getShiftDetails($doctor)
     {
         $this->db->select("consult_duration,charge_id");
@@ -67,13 +67,13 @@ class Onlineappointment_model extends MY_Model
         $result = $query->row_array();
         return $result;
     }
-    
+
     public function addAppointment($appointment)
     {
         $this->db->trans_start();
         $this->db->trans_strict(false);
         $this->db->insert("appointment", $appointment);
-        $insert_id = $this->db->insert_id();             
+        $insert_id = $this->db->insert_id();
         $this->db->trans_complete();
         if ($this->db->trans_status() === false) {
             $this->db->trans_rollback();
@@ -83,7 +83,7 @@ class Onlineappointment_model extends MY_Model
             return $insert_id;
         }
     }
-    
+
     public function getAppointments($doctor_id, $shift_id, $date)
     {
         $this->db->select("time");
@@ -115,14 +115,14 @@ class Onlineappointment_model extends MY_Model
         $result = $query->row_array();
         return $result;
     }
-    
+
     public function addShiftDetails($data)
     {
         $this->db->trans_start(); # Starting Transaction
         $this->db->trans_strict(false); # See Note 01. If you wish can remove as well
         //=======================Code Start===========================
         $this->db->insert("shift_details", $data);
-        
+
         $insert_id = $this->db->insert_id();
         $message = INSERT_RECORD_CONSTANT . " On Shift Details id " . $insert_id;
         $action = "Insert";
@@ -139,14 +139,15 @@ class Onlineappointment_model extends MY_Model
             return false;
         } else {
             return $record_id;
-        }        
+        }
     }
 
-    public function updateShiftDetails($data){
+    public function updateShiftDetails($data)
+    {
         $this->db->trans_start(); # Starting Transaction
         $this->db->trans_strict(false); # See Note 01. If you wish can remove as well
         //=======================Code Start===========================
-        $this->db->where("staff_id",$data["staff_id"]);
+        $this->db->where("staff_id", $data["staff_id"]);
         $this->db->update("shift_details", $data);
         $message = UPDATE_RECORD_CONSTANT . " On Shift Details id " . $data["staff_id"];
         $action = "Update";
@@ -175,15 +176,16 @@ class Onlineappointment_model extends MY_Model
             $this->datatables->where("date_format(appointment.date,'%Y-%m-%d')", $date);
         }
         $this->datatables
-            ->select("patients.id,patients.patient_name,patients.mobileno,patients.email,appointment.date,appointment.time,appointment.source")
+            ->select("patients.id, patients.patient_name, patients.mobileno, patients.email, appointment_payment.paid_amount, appointment.date, appointment.time, appointment.source")
             ->searchable("patients.patient_name,patients.mobileno,patients.email,appointment.date,appointment.time,appointment.source")
-           ->orderable("patients.patient_name,patients.mobileno,'',patients.email,appointment.date")
+            ->orderable("patients.patient_name,patients.mobileno,'',patients.email,appointment.date")
             ->join("patients", "appointment.patient_id=patients.id")
+            ->join("appointment_payment", "appointment_payment.appointment_id = appointment.id")
             ->where("appointment.appointment_status", "approved")
             ->from("appointment");
         return $this->datatables->generate('json');
     }
-    
+
     public function getPatientOnline($doctor_id, $date, $shift, $isqueue = 0)
     {
         $query = $this->db
@@ -200,7 +202,7 @@ class Onlineappointment_model extends MY_Model
         $result = $query->result_array();
         return $result;
     }
-    
+
     public function getPatientOffline($doctor_id, $date, $shift, $isqueue = 0)
     {
         $query = $this->db
@@ -238,10 +240,10 @@ class Onlineappointment_model extends MY_Model
 
     public function deleteQueue($where_in)
     {
-        $this->db->where_in("appointment_id",$where_in);
+        $this->db->where_in("appointment_id", $where_in);
         $this->db->delete("appointment_queue");
-        $this->db->where_in("id",$where_in);
-        $this->db->set("is_queue",0);
+        $this->db->where_in("id", $where_in);
+        $this->db->set("is_queue", 0);
         $this->db->update("appointment");
     }
 
@@ -250,7 +252,7 @@ class Onlineappointment_model extends MY_Model
         $this->db->select("appointment_id");
         $this->db->where("staff_id", $doctor);
         $this->db->where("date_format(date,'%Y-%m-%d')", $date);
-        $this->db->where("shift_id",$shift);
+        $this->db->where("shift_id", $shift);
         $query  = $this->db->get("appointment_queue");
         $result = $query->result_array();
         return $result;
@@ -261,9 +263,9 @@ class Onlineappointment_model extends MY_Model
         $this->db->trans_start(); # Starting Transaction
         $this->db->trans_strict(false); # See Note 01. If you wish can remove as well
         //=======================Code Start===========================        
-        
-        $this->db->insert("global_shift", $shift);        
-        
+
+        $this->db->insert("global_shift", $shift);
+
         $insert_id = $this->db->insert_id();
         $message = INSERT_RECORD_CONSTANT . " On Global Shift id " . $insert_id;
         $action = "Insert";
@@ -280,7 +282,7 @@ class Onlineappointment_model extends MY_Model
             return false;
         } else {
             return $record_id;
-        }        
+        }
     }
 
     public function updateGlobalShift($shift)
@@ -288,10 +290,10 @@ class Onlineappointment_model extends MY_Model
         $this->db->trans_start(); # Starting Transaction
         $this->db->trans_strict(false); # See Note 01. If you wish can remove as well
         //=======================Code Start===========================        
-        
+
         $this->db->where("id", $shift["id"]);
-        $this->db->update("global_shift", $shift);        
-        
+        $this->db->update("global_shift", $shift);
+
         $message = UPDATE_RECORD_CONSTANT . " On Global Shift id " . $shift["id"];
         $action = "Update";
         $record_id = $shift["id"];
@@ -315,9 +317,9 @@ class Onlineappointment_model extends MY_Model
         $this->db->trans_start(); # Starting Transaction
         $this->db->trans_strict(false); # See Note 01. If you wish can remove as well
         //=======================Code Start===========================
-        
+
         $this->db->where('id', $id)->delete('global_shift');
-        
+
         $message = DELETE_RECORD_CONSTANT . " On Global Shift id " . $id;
         $action = "Delete";
         $record_id = $id;
@@ -440,9 +442,9 @@ class Onlineappointment_model extends MY_Model
             ->join("appointment", "appointment.id=appointment_queue.appointment_id")
             ->join("patients", "appointment.patient_id=patients.id")
             ->where("appointment.doctor", $doctor_id)
-            ->where("appointment_queue.shift_id",$shift)
+            ->where("appointment_queue.shift_id", $shift)
             ->where("date_format(appointment.date,'%Y-%m-%d')", $date)
-            ->order_by("appointment_queue.position","asc")
+            ->order_by("appointment_queue.position", "asc")
             ->get("appointment_queue");
         $result = $query->result_array();
         return $result;
@@ -451,9 +453,9 @@ class Onlineappointment_model extends MY_Model
     public function getAppointmentDetails($appointment_id)
     {
         $this->db->select("shift_details.charge_id, patients.email, patients.patient_name as name,patients.mobileno,patients.id as patient_id,appointment.time,appointment.doctor,appointment.shift_id,appointment.date");
-        $this->db->join("appointment","appointment.doctor=shift_details.staff_id","left");
-        $this->db->join("patients","patients.id=appointment.patient_id","left");
-        $this->db->where("appointment.id",$appointment_id);
+        $this->db->join("appointment", "appointment.doctor=shift_details.staff_id", "left");
+        $this->db->join("patients", "patients.id=appointment.patient_id", "left");
+        $this->db->where("appointment.id", $appointment_id);
         $query  = $this->db->get("shift_details");
         $result = $query->row();
         return $result;
@@ -463,11 +465,11 @@ class Onlineappointment_model extends MY_Model
     {
         $this->db->trans_start();
         $this->db->trans_strict(false);
-        $this->db->insert("appointment_payment",$payment_data);
-        $insert_id=$this->db->insert_id();
+        $this->db->insert("appointment_payment", $payment_data);
+        $insert_id = $this->db->insert_id();
         $data = array('appointment_status' => 'approved');
-        $this->db->insert("transactions",$transaction);
-        $this->db->update("appointment", $data,"id=".$payment_data['appointment_id']);
+        $this->db->insert("transactions", $transaction);
+        $this->db->update("appointment", $data, "id=" . $payment_data['appointment_id']);
         $this->db->trans_complete();
         if ($this->db->trans_status() === false) {
             $this->db->trans_rollback();
@@ -475,7 +477,6 @@ class Onlineappointment_model extends MY_Model
         } else {
             $this->db->trans_commit();
             return $payment_data['appointment_id'];
-        } 
+        }
     }
-
 }

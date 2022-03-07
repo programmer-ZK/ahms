@@ -19,13 +19,6 @@
 				</a>
 			</li>
 
-
-			<li class="treeview <?php echo set_Topmenu('shiftreport'); ?>">
-				<a href="<?php echo base_url(); ?>admin/admin/shiftreport">
-					<i class="fas fa-line-chart"></i> <span>Shift Report</span>
-				</a>
-			</li>
-
 			<?php
 			if ($this->module_lib->hasActive('appointment')) {
 				if (
@@ -45,7 +38,7 @@
 				}
 			}
 			?>
-			
+
 			<?php
 			if ($this->module_lib->hasActive('ipd')) {
 				if ($this->rbac->hasPrivilege('ipd_patient', 'can_view')) {
@@ -563,20 +556,14 @@
 								<li class="<?php echo set_Submenu('bed'); ?>"><a href="<?php echo base_url(); ?>admin/setup/bed/status"><i class="fas fa-angle-right"></i> <?php echo $this->lang->line('bed'); ?></a></li>
 							<?php
 							}
-						}
+						}						 
 
 						if (($this->rbac->hasPrivilege('opd_prescription_print_header_footer', 'can_view')) || ($this->rbac->hasPrivilege('ipd_bill_print_header_footer', 'can_view')) || ($this->rbac->hasPrivilege('ipd_prescription_print_header_footer', 'can_view')) || ($this->rbac->hasPrivilege('pharmacy_bill_print_header_footer', 'can_view')) || ($this->rbac->hasPrivilege('print_payslip_header_footer', 'can_view')) || ($this->rbac->hasPrivilege('birth_print_header_footer', 'can_view')) || ($this->rbac->hasPrivilege('death_print_header_footer', 'can_view'))) {
 							?>
 							<li class="<?php echo set_Submenu('admin/printing'); ?>"><a href="<?php echo base_url(); ?>admin/printing"><i class="fas fa-angle-right"></i> <?php echo $this->lang->line('print_header_footer'); ?></a></li>
 							<?php
 						}
-						if ($this->module_lib->hasActive('front_office')) {
-							if ($this->rbac->hasPrivilege('setup_front_office', 'can_view')) {
-							?>
-								<li class="<?php echo set_Submenu('admin/visitorspurpose'); ?>"><a href="<?php echo base_url(); ?>admin/visitorspurpose"><i class="fas fa-angle-right"></i> <?php echo $this->lang->line('front_office'); ?></a></li>
-							<?php
-							}
-						}
+						 
 						if (($this->rbac->hasPrivilege('operation', 'can_view')) || ($this->rbac->hasPrivilege('operation_category', 'can_view'))) {
 							?>
 							<li class="<?php echo set_Submenu('operation_theatre/index'); ?>"><a href="<?php echo base_url(); ?>admin/operationtheatre/index"><i class="fas fa-angle-right"></i> <?php echo $this->lang->line('operations'); ?></a></li>
@@ -606,13 +593,7 @@
 							}
 						}
 
-						if ($this->module_lib->hasActive('blood_bank')) {
-							if ($this->rbac->hasPrivilege('blood_bank_product', 'can_view')) {
-							?>
-								<li class="<?php echo set_Submenu('admin/bloodbank'); ?>"><a href="<?php echo base_url(); ?>admin/bloodbank/products"><i class="fas fa-angle-right"></i> <?php echo $this->lang->line('blood_bank'); ?></a></li>
-							<?php
-							}
-						}
+						
 						if (($this->rbac->hasPrivilege('symptoms_type', 'can_view')) || ($this->rbac->hasPrivilege('symptoms_head', 'can_view'))) {
 							?>
 							<li class="<?php echo set_Submenu('symptoms/index'); ?>"><a href="<?php echo base_url(); ?>admin/symptoms"><i class="fas fa-angle-right"></i> <?php echo $this->lang->line('symptoms'); ?></a></li>
@@ -633,12 +614,7 @@
 
 							if (($this->rbac->hasPrivilege('income_head', 'can_view')) || ($this->rbac->hasPrivilege('income_head', 'can_view'))) {
 							?>
-								<?php if ($this->module_lib->hasActive('income')) { ?>
-									<li class="<?php echo set_Submenu('finance/index'); ?>"><a href="<?php echo base_url(); ?>admin/incomehead"><i class="fas fa-angle-right"></i> <?php echo $this->lang->line('finance'); ?></a></li>
-								<?php } else { ?>
-									<li class="<?php echo set_Submenu('finance/index'); ?>"><a href="<?php echo base_url(); ?>admin/expensehead"><i class="fas fa-angle-right"></i> <?php echo $this->lang->line('finance'); ?></a></li>
-
-								<?php } ?>
+								
 							<?php
 							}
 						}
@@ -648,17 +624,15 @@
 							<li class="<?php echo set_Submenu('hr/index'); ?>"><a href="<?php echo base_url(); ?>admin/leavetypes"><i class="fas fa-angle-right"></i> <?php echo $this->lang->line('human_resource'); ?></a></li>
 						<?php
 						} ?>
-						<?php if ($this->module_lib->hasActive('referral')) {
-							if ($this->rbac->hasPrivilege('referral_commission', 'can_view')) {  ?>
-								<li class="<?php echo set_Submenu('admin/referral/commission'); ?>"><a href="<?php echo base_url(); ?>admin/referral/commission"><i class="fas fa-angle-right"></i> <?php echo $this->lang->line('referral'); ?></a></li>
-							<?php }
-						}
+						
+						<?php
 						if ($this->module_lib->hasActive('appointment')) {
 							if (($this->rbac->hasPrivilege('online_appointment_slot', 'can_view')) || ($this->rbac->hasPrivilege('online_appointment_doctor_shift', 'can_view')) || ($this->rbac->hasPrivilege('online_appointment_shift', 'can_view')) || ($this->rbac->hasPrivilege('doctor_wise_appointment', 'can_view'))) {  ?>
 
 								<li class="<?php echo set_Submenu('admin/onlineappointment'); ?>"><a href="<?php echo base_url(); ?>admin/onlineappointment/"><i class="fas fa-angle-right"></i> <?php echo $this->lang->line('appointment'); ?></a></li>
 							<?php  }
 						}
+
 						if ($this->module_lib->hasActive('inventory')) {
 							if ($this->rbac->hasPrivilege('item_category', 'can_view')) {
 							?>
