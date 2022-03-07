@@ -2,13 +2,13 @@
 
 if (!defined('BASEPATH')) {
   exit('No direct script access allowed');
-}
+} 
 
 class Appointment_model extends MY_Model
 {
-  public function last_token()
+  public function last_token($doc_id)
   {
-    $query = $this->db->query("SELECT token_id, created_at FROM appointment ORDER BY id DESC LIMIT 1");
+    $query = $this->db->query("SELECT token_id, created_at FROM appointment Where doctor = '$doc_id' ORDER BY id DESC LIMIT 1");
     $ret = $query->row();
     $created_at = $ret->created_at;
     $token = $ret->token_id;
@@ -27,7 +27,7 @@ class Appointment_model extends MY_Model
     // return $this->db->insert_id();
     $insert_id = $this->db->insert_id();
     $message   = INSERT_RECORD_CONSTANT . " On Appointment Created " . $insert_id;
-
+    
     $action    = "Insert";
     $record_id = $insert_id;
     $this->log($message, $record_id, $action);
@@ -177,6 +177,22 @@ class Appointment_model extends MY_Model
     $this->db->join('appointment_queue', 'appointment_queue.appointment_id = appointment.id', "left");
     $this->db->join('blood_bank_products', '`patients`.`blood_bank_product_id` = blood_bank_products.id', "left");
     $this->db->where('appointment.id', $id);
+    $query = $this->db->get('appointment');
+    return $query->row_array();
+  }
+
+  public function getDetailsShiftReport($doctor_id, $date)
+  {
+    if ($doctor_id != "null") {
+      $this->db->where("appointment.doctor", $doctor_id);
+    }
+    if ($date != "null") {
+      $this->datatables->where("date_format(appointment.date,'%Y-%m-%d')", $date);
+    }
+    $this->db->select("(SELECT SUM(appointment_payment.paid_amount)) AS total,  COUNT(appointment.id) AS NumOfApp, staff.name , staff.surname, Date_format(appointment.created_at, '%Y-%m-%d') AS date ");
+    $this->db->join("appointment_payment", "appointment_payment.appointment_id = appointment.id");
+    $this->db->join("staff ", "staff.id = appointment.doctor");
+    $this->db->where("appointment.appointment_status", "approved");
     $query = $this->db->get('appointment');
     return $query->row_array();
   }
