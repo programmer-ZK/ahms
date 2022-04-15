@@ -183,7 +183,7 @@
                 }
                 ?>
 
-                
+
 
                 <?php
                 $file   = "";
@@ -215,6 +215,7 @@
                           <h4 style="text-transform: capitalize;"><?php echo $this->customlib->getAdminSessionUserName(); ?></h4>
                           <h5><?php echo $role; ?></h5>
                         </div>
+
                         <div class="divider"></div>
                         <div class="sspass">
                           <a href="<?php echo base_url() . "admin/staff/profile/" . $id ?>" data-toggle="tooltip" title="" data-original-title="<?php echo $this->lang->line('my_profile'); ?>"><i class="fa fa-user"></i><?php echo $this->lang->line('profile'); ?></a>
