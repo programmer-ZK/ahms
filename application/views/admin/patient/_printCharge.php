@@ -47,10 +47,12 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                 <thead>
                   <tr class="line">
                     <td><strong>#</strong></td>
-                    <td colspan="2">
+                    <td colspan="">
                       <strong><?php echo $this->lang->line('description'); ?></strong>
                     </td>
-
+                    <td colspan="">
+                      <strong>Qty</strong>
+                    </td>
 
                     <td class="text-right">
                       <strong><?php echo $this->lang->line('amount') . ' (' . $currency_symbol . ')'; ?></strong>
@@ -60,10 +62,11 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                 <tbody>
                   <tr>
                     <td>1</td>
-                    <td colspan="2">
+                    <td colspan="">
                       <strong><?php echo $charge->charge_name ?></strong><br>
                       <?php echo $charge->note; ?>
                     </td>
+                    <td class="text-right"><?php echo $charge->qty; ?></td>
                     <td class="text-right"><?php echo $charge->amount; ?></td>
                   </tr>
                   <tr>
