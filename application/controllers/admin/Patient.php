@@ -6257,13 +6257,21 @@ This Function is used to Import Multiple Patient Records
 
 	public function printCharge()
 	{
-		$type                  = $this->input->post('type');
-		$print_details         = $this->printing_model->get('', $type);
-		$id                    = $this->input->post('id');
-		$charge                = $this->charge_model->getChargeById($id);
-		$data['print_details'] = $print_details;
-		$data['charge']        = $charge;
-		$page                  = $this->load->view('admin/patient/_printCharge', $data, true);
+		$type                       = $this->input->post('type');
+		$print_details              = $this->printing_model->get('', $type);
+		$id                         = $this->input->post('id');
+		$charge                     = $this->charge_model->getChargeById($id);
+		$data['print_details']      = $print_details;
+		$data['charge']             = $charge;
+
+		$patientid = $this->patient_model->getPatientbyipdid($id);
+		$ipdid        = $patientid['pid'];
+
+		$doctors_ipd                = $this->patient_model->getDoctorsipd($ipdid);
+		$data["doctors_ipd"]        = $doctors_ipd;
+
+		$page                       = $this->load->view('admin/patient/_printCharge', $data, true);
+
 		echo json_encode(array('status' => 1, 'page' => $page));
 	}
 

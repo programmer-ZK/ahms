@@ -51,7 +51,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                       <strong><?php echo $this->lang->line('description'); ?></strong>
                     </td>
                     <td colspan="">
-                      <strong>Qty</strong>
+                      <strong>Day(s)</strong>
                     </td>
 
                     <td class="text-right">
@@ -82,6 +82,21 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                     </td>
                   </tr>
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <th>
+                      <?php echo $doctors_ipd ?>
+                    </th>
+                  </tr>
+                  <?php
+                  foreach ($doctors_ipd as $dkey => $dvalue) { ?>
+                    <tr>
+                      <td>
+                        <?php echo $dvalue['consult_doctor']; ?>
+                      </td>
+                    </tr>
+                  <?php } ?>
+                </tfoot>
               </table>
             </div>
           </div>
