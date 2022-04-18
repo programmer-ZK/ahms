@@ -41,6 +41,16 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 
               </tr>
               <tr>
+                <th>
+                  <?php
+                  echo $this->lang->line('bed');;
+                  ?>
+                </th>
+                <td>
+                  <?php echo $result['bed_name'] . " - " . $result['bedgroup_name'] . " - " . $result['floor_name'] ?>
+                </td>
+              </tr>
+              <tr>
                 <th><?php echo $this->lang->line("case_id"); ?></th>
                 <td> <?php echo $case_reference_id; ?> </td>
               </tr>
