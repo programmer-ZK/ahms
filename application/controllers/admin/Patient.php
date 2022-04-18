@@ -2814,6 +2814,7 @@ This Function is used to Import Multiple Patient Records
 		}
 
 		$data['getipdoverviewtreatment'] = $this->patient_model->getipdoverviewtreatment($id);
+
 		$this->load->view("layout/header");
 		$this->load->view("admin/patient/ipdprofile", $data);
 		$this->load->view("layout/footer");
@@ -6257,20 +6258,75 @@ This Function is used to Import Multiple Patient Records
 
 	public function printCharge()
 	{
-		$type                       = $this->input->post('type');
-		$print_details              = $this->printing_model->get('', $type);
-		$id                         = $this->input->post('id');
-		$charge                     = $this->charge_model->getChargeById($id);
-		$data['print_details']      = $print_details;
-		$data['charge']             = $charge;
+		$type                      = $this->input->post('type');
+		$print_details             = $this->printing_model->get('', $type);
+		$id                        = $this->input->post('id');
 
-		$patientid = $this->patient_model->getPatientbyipdid($id);
-		$ipdid        = $patientid['pid'];
+		$ipdid                   = $this->input->post('ipdID');
+
+		$charge                    = $this->charge_model->getChargeById($id);
+		$data['print_details']     = $print_details;
+		$data['charge']            = $charge;
+
+		$patientid = $this->patient_model->getPatientbyipdid($ipdid);
+		$id        = $patientid['pid'];
+
+		if ($ipdid == '') {
+			$ipdresult = $this->patient_model->search_ipd_patients($searchterm = '', $active = 'yes', $discharged = 'no', $id);
+			$ipdid     = $ipdresult["ipdid"];
+		}
+		$this->session->set_userdata('top_menu', 'IPD_in_patient');
+
+		$doctors                    = $this->staff_model->getStaffbyrole(3);
+		$data["doctors"]            = $doctors;
 
 		$doctors_ipd                = $this->patient_model->getDoctorsipd($ipdid);
 		$data["doctors_ipd"]        = $doctors_ipd;
 
-		$page                       = $this->load->view('admin/patient/_printCharge', $data, true);
+		$doctorid                   = "";
+		$data["doctor_select"]  = $doctorid;
+		$result                 = array();
+
+		if (!empty($id)) {
+			$result               = $this->patient_model->getIpdDetails($ipdid);
+			$timeline_list        = $this->timeline_model->getPatientTimeline($id, $timeline_status = '');
+			$prescription_details = $this->prescription_model->getIpdPrescription($ipdid);
+			$consultant_register  = $this->patient_model->getPatientConsultant($id, $ipdid);
+
+			$nurse_note = $this->patient_model->getdatanursenote($id, $ipdid);
+
+			$max_dose                          = $this->patient_model->getMaxByipdid($ipdid);
+			$medicationreport                  = $this->patient_model->getmedicationdetailsbydate($ipdid);
+			$data['medicationreport_overview'] = $this->patient_model->getmedicationdetailsbydate_overview($ipdid);
+
+			$data['max_dose'] = $max_dose->max_dose;
+			foreach ($nurse_note as $key => $nurse_note_value) {
+				$notecomment                        = $this->patient_model->getnurenotecomment($ipdid, $nurse_note_value['id']);
+				$nursenote[$nurse_note_value['id']] = $notecomment;
+			}
+			if (!empty($nursenote)) {
+				$data["nursenote"] = $nursenote;
+			}
+			$charges                     = $this->charge_model->getCharges($ipdid);
+			$paymentDetails              = $this->transaction_model->IPDPatientPayments($ipdid);
+			$paid_amount                 = $this->payment_model->getPaidTotal($id, $ipdid);
+			$data["paid_amount"]         = $paid_amount["paid_amount"];
+			$data["payment_details"]     = $paymentDetails;
+			$data["consultant_register"] = $consultant_register;
+			$data["nurse_note"]          = $nurse_note;
+			$data["medication"]          = $medicationreport;
+			$data["result"]              = $result;
+			$data["prescription_detail"] = $prescription_details;
+			$data["timeline_list"]       = $timeline_list;
+			$data["charge_type"]         = $this->chargetype_model->getChargeTypeByModule("ipd");
+			$data["charges"]             = $charges;
+			$data['roles']               = $this->role_model->get();
+		}
+
+		$doctorsipd                  = $this->staff_model->getStaffipd(3, $result['cons_doctor']);
+		$data["doctorsipd"]          = $doctorsipd;
+
+		$page                      = $this->load->view('admin/patient/_printCharge', $data, true);
 
 		echo json_encode(array('status' => 1, 'page' => $page));
 	}

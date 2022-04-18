@@ -3,7 +3,10 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 $genderList = $this->customlib->getGender();
 $case_reference_id = $result['case_reference_id'];
 $categorylist = $this->operationtheatre_model->category_list();
+
 ?>
+
+
 <link rel="stylesheet" href="<?php echo base_url(); ?>backend/plugins/timepicker/bootstrap-timepicker.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>backend/multiselect/css/jquery.multiselect.css">
 <script src="<?php echo base_url(); ?>backend/multiselect/js/jquery.multiselect.js"></script>
@@ -1970,7 +1973,7 @@ $categorylist = $this->operationtheatre_model->category_list();
                             <td class="text-right"><?php echo number_format($charge["apply_charge"], 2) ?></td>
                             <td class="text-right"><?php echo number_format($charge["amount"], 2) ?></td>
                             <td class="text-right white-space-nowrap">
-                              <a href="javascript:void(0);" class="btn btn-default btn-xs print_charge" data-toggle="tooltip" title="" data-record-id="<?php echo $charge['id']; ?>" data-original-title="<?php echo $this->lang->line('print'); ?>" data-loading-text="<?php echo $this->lang->line('please_wait'); ?>">
+                              <a href="javascript:void(0);" class="btn btn-default btn-xs print_charge" data-toggle="tooltip" title="" data-record-id="<?php echo $charge['id']; ?>" data-ipd-id="<?= $_SERVER["REQUEST_URI"][-1] ?>" data-original-title="<?php echo $this->lang->line('print'); ?>" data-loading-text="<?php echo $this->lang->line('please_wait'); ?>">
                                 <i class="fa fa-print"></i>
                               </a>
 
@@ -6462,7 +6465,8 @@ $categorylist = $this->operationtheatre_model->category_list();
       type: "POST",
       data: {
         'id': record_id,
-        'type': 'ipd'
+        'type': 'ipd',
+        'ipdID': <?= $_SERVER["REQUEST_URI"][-1] ?>
       },
       dataType: 'json',
       beforeSend: function() {

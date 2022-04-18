@@ -28,17 +28,30 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
       <div class="" style="width: 100%; height: 40px;"></div>
       <div class="card">
         <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-              <p><?php echo $this->lang->line('patient'); ?>: <?php echo composePatientName($patient_name, $patient_id); ?></p>
-              <p><?php echo $this->lang->line('case_id'); ?>: <?php echo $case_reference_id; ?></p>
-            </div>
+          <div class="ro">
+            <table>
+              <tr>
+                <div class="text-center mt-5" style="font-size: 34px;">
+                  <p><?php echo composePatientName($patient_name, $patient_id) ?></p>
+                </div>
+              </tr>
+              <tr>
+                <th>Doctor</th>
+                <td class="text-capitalize"><span id='patient_name_view'><?php echo  $result['name'] . " " . $result['surname']  ?></span></td>
 
-            <div class="col-md-6 text-right">
+              </tr>
+              <tr>
+                <th><?php echo $this->lang->line("case_id"); ?></th>
+                <td> <?php echo $case_reference_id; ?> </td>
+              </tr>
 
-              <p><span class="text-muted"><?php echo $this->lang->line('date'); ?>: </span> <?php echo $this->customlib->YYYYMMDDHisTodateFormat($charge->date, $this->customlib->getHospitalTimeFormat()); ?></p>
-
-            </div>
+              <tr>
+                <th>Date</th>
+                <td><?php echo $this->customlib->YYYYMMDDHisTodateFormat($result["date"]); ?></td>
+                <th> </th>
+                <td> </td>
+              </tr>
+            </table>
           </div>
 
           <div class="row">
@@ -82,26 +95,9 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                     </td>
                   </tr>
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <th>
-                      <?php echo $doctors_ipd ?>
-                    </th>
-                  </tr>
-                  <?php
-                  foreach ($doctors_ipd as $dkey => $dvalue) { ?>
-                    <tr>
-                      <td>
-                        <?php echo $dvalue['consult_doctor']; ?>
-                      </td>
-                    </tr>
-                  <?php } ?>
-                </tfoot>
               </table>
             </div>
           </div>
-
-
         </div>
       </div>
 
