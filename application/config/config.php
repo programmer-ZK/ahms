@@ -24,11 +24,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
   | a PHP script and you can easily do that on your own.
   |
  */
-<<<<<<< HEAD
-$config['base_url'] = 'http://127.0.0.1/ahms/';
-=======
+// <<<<<<< HEAD
+// $config['base_url'] = 'http://127.0.0.1/ahms/';
+// =======
 $config['base_url'] = 'http://192.168.10.7/ahms/';
->>>>>>> 8d73337494f768d06b3bcdf00c8652e4c5aa8d9e
+// >>>>>>> 8d73337494f768d06b3bcdf00c8652e4c5aa8d9e
 
 
 /*
@@ -517,10 +517,10 @@ $config['rewrite_short_tags'] = FALSE;
   | Array:		array('10.0.1.200', '192.168.5.0/24')
  */
 $config['routine_session'] = 16;
-<<<<<<< HEAD
-$config['routine_update'] = 1646593200;
-=======
-$config['routine_update'] = 1646247600;
->>>>>>> 8d73337494f768d06b3bcdf00c8652e4c5aa8d9e
+// <<<<<<< HEAD
+$config['routine_update'] = 1652295600;
+// =======
+// $config['routine_update'] = 1646247600;
+// >>>>>>> 8d73337494f768d06b3bcdf00c8652e4c5aa8d9e
 $config['proxy_ips'] = '';
 $config['installed'] = true;

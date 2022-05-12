@@ -143,8 +143,9 @@ $genderList      = $this->customlib->getGender_Patient();
 										<div class="form-group" style="position: relative; overflow:visible !important">
 											<label><?php echo $this->lang->line('appointment_date'); ?></label>
 											<small class="req"> *</small>
-											<input type="text" id="datetimepicker" name="date" class="form-control datetime">
+											<input type="text" id="datetimepicker" name="date" class="form-control datetime appointment_date">
 											<span class="text-danger"><?php echo form_error('date'); ?></span>
+
 										</div>
 									</div>
 									<div class="col-md-3" style="display: none;">
@@ -777,7 +778,7 @@ $genderList      = $this->customlib->getGender_Patient();
 
 		return true;
 	}
-	
+
 	$(document).ready(function(e) {
 		$("#formedit").on('submit', (function(e) {
 			$("#formeditbtn").button('loading');
@@ -1340,5 +1341,6 @@ $genderList      = $this->customlib->getGender_Patient();
 		});
 	}(jQuery))
 </script>
+
 <!-- //========datatable end===== -->
 <?php $this->load->view('admin/patient/patientaddmodal') ?>
