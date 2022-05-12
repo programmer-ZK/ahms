@@ -101,6 +101,17 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 											<?php echo $this->customlib->getAdminSessionUserName(); ?>
 										</td>
 									</tr>
+
+									<?php if ($result['appointment_status'] == 'cancel') { ?>
+										<tr>
+											<th>Status :</th>
+											<td></td>
+											<td class="text-capitalize text-right">
+												Cancelled
+											</td>
+										</tr>
+									<?php } ?>
+
 								</tbody>
 
 							</table>

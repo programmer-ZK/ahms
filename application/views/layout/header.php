@@ -76,13 +76,9 @@
   <?php
   if ($this->config->item('SHLK') == "") {
   ?>
-    <div class="topaleart">
-      <div class="slidealert">
-        <div class="alert alert-dismissible topaleart-inside">
-          <p class="palert">Alert! You are using unregistered version of Smart Hospital. Please <a href="#" class="purchasemodal">click here</a> to register your purchase code for Smart Hospital.</p>
-        </div>
-      </div>
-    </div>
+
+    <p class="palert"><a href="#" class="purchasemodal"></a></p>
+
   <?php
   }
   ?>
