@@ -63,7 +63,7 @@ $amount = 0;
                 <thead>
                   <tr class="line">
                     <td><strong>#</strong></td>
-                    <td colspan="2" class="text-left"><strong><?php echo $this->lang->line('test_name'); ?></strong></td>
+                    <td colspan="2" class="text-left"><strong><?php echo $this->lang->line('name'); ?></strong></td>
                     <td colspan="2" class="text-right"><strong><?php echo $this->lang->line('amount') . ' (' . $currency_symbol . ')'; ?></strong></td>
                   </tr>
                 </thead>
@@ -85,18 +85,27 @@ $amount = 0;
                       <td colspan="2"><strong><?php echo $report_value->test_name; ?></strong></td>
 
                       <td colspan="2" class="text-right">
-                        <?php echo $report_value->apply_charge; ?>
+                        <?php echo $report_value->apply_charge - 500; ?>
                       </td>
                     </tr>
                   <?php
                     $row_counter++;
                   }
                   ?>
+                  <tr>
+                    <?php $totl_char = 500 * ($row_counter - 1)  ?>
+                    <td><?= $row_counter++  ?></td>
+                    <td colspan="2"><strong>Hospital charges</strong></td>
+
+                    <td colspan="2" class="text-right">
+                      <?= $totl_char ?>
+                    </td>
+                  </tr>
 
                   <tr>
                     <td colspan="3" class="thick-line"></td>
                     <td class="text-right thick-line"><strong><?php echo $this->lang->line('total'); ?></strong></td>
-                    <td class="text-right thick-line"><strong><?php echo $currency_symbol . "" . amountFormat($amount); ?></strong></td>
+                    <td class="text-right thick-line"><strong><?php echo $amount; ?></strong></td>
                   </tr>
                   <tr style="display: none;">
                     <td colspan="3" class="no-line"></td>
@@ -122,6 +131,15 @@ $amount = 0;
                     <td colspan="3" class="no-line"></td>
                     <td class="text-right no-line"><strong><?php echo $this->lang->line('total_due'); ?></strong></td>
                     <td class="text-right no-line"><strong><?php echo $currency_symbol . "" . amountFormat($result->net_amount - $result->total_deposit); ?></strong></td>
+                  </tr>
+                  <br>
+                  <br>
+                  <tr>
+                    <th colspan="2">Printed By:</th>
+                    <td colspan=""></td>
+                    <td colspan="3" class="text-capitalize text-right">
+                      <?php echo $this->customlib->getAdminSessionUserName(); ?>
+                    </td>
                   </tr>
                 </tbody>
               </table>
