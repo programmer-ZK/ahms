@@ -70,22 +70,29 @@ $amount = 0;
                 <tbody>
                   <?php
                   $row_counter = 1;
+                  $test = 0;
                   $tax_amt = 0;
+                  $totl_char = 0;
 
                   foreach ($result->radiology_report as $report_key => $report_value) {
                     $amount += $report_value->apply_charge;
-                    if ($report_value->tax_percentage > 0) {
-                      $tax_amt += ($report_value->tax_percentage);
-                    } else {
-                      $tax_amt += 0;
-                    }
+
                   ?>
                     <tr>
                       <td><?php echo $row_counter; ?></td>
                       <td colspan="2"><strong><?php echo $report_value->test_name; ?></strong></td>
 
                       <td colspan="2" class="text-right">
-                        <?php echo $report_value->apply_charge - 500; ?>
+                        <?php
+                        if ($report_value->tax_percentage == 0) {
+                          $test = $report_value->apply_charge;
+                        } else {
+                          $test = $report_value->apply_charge - $report_value->tax_percentage;
+                          $totl_char += $report_value->tax_percentage;
+                        }
+                        ?>
+                        <?php echo $test; ?>
+
                       </td>
                     </tr>
                   <?php
@@ -93,45 +100,27 @@ $amount = 0;
                   }
                   ?>
                   <tr>
-                    <?php $totl_char = 500 * ($row_counter - 1)  ?>
-                    <td><?= $row_counter++  ?></td>
-                    <td colspan="2"><strong>Hospital charges</strong></td>
 
-                    <td colspan="2" class="text-right">
-                      <?= $totl_char ?>
-                    </td>
+                    <?php if ($totl_char > 0) { ?>
+
+                      <td><?= $row_counter++  ?></td>
+                      <td colspan="2"><strong>Hospital charges</strong></td>
+
+                      <td colspan="2" class="text-right">
+                        <?= $totl_char ?>
+                      </td>
+
+                    <?php } ?>
+
                   </tr>
+
 
                   <tr>
                     <td colspan="3" class="thick-line"></td>
                     <td class="text-right thick-line"><strong><?php echo $this->lang->line('total'); ?></strong></td>
                     <td class="text-right thick-line"><strong><?php echo $amount; ?></strong></td>
                   </tr>
-                  <tr style="display: none;">
-                    <td colspan="3" class="no-line"></td>
-                    <td class="text-right no-line"><strong><?php echo $this->lang->line('discount'); ?></strong></td>
-                    <td class="text-right no-line"><strong><?php echo "(" . $result->discount_percentage . "%) " . $currency_symbol . amountFormat($result->discount); ?></strong></td>
-                  </tr>
-                  <tr style="display: none;">
-                    <td colspan="3" class="no-line"></td>
-                    <td class="text-right no-line"><strong><?php echo $this->lang->line('tax'); ?></strong></td>
-                    <td class="text-right no-line"><strong><?php echo $currency_symbol . "" . amountFormat($tax_amt); ?></strong></td>
-                  </tr>
-                  <tr style="display: none;">
-                    <td colspan="3" class="no-line"></td>
-                    <td class="text-right no-line"><strong><?php echo $this->lang->line('net_amount'); ?></strong></td>
-                    <td class="text-right no-line"><strong><?php echo $currency_symbol . "" . amountFormat($result->net_amount); ?></strong></td>
-                  </tr>
-                  <tr style="display: none;">
-                    <td colspan="3" class="no-line"></td>
-                    <td class="text-right no-line"><strong><?php echo $this->lang->line('paid'); ?></strong></td>
-                    <td class="text-right no-line"><strong><?php echo $currency_symbol . "" . amountFormat($result->total_deposit); ?></strong></td>
-                  </tr>
-                  <tr style="display: none;">
-                    <td colspan="3" class="no-line"></td>
-                    <td class="text-right no-line"><strong><?php echo $this->lang->line('total_due'); ?></strong></td>
-                    <td class="text-right no-line"><strong><?php echo $currency_symbol . "" . amountFormat($result->net_amount - $result->total_deposit); ?></strong></td>
-                  </tr>
+
                   <br>
                   <br>
                   <tr>
