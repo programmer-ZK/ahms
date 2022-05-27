@@ -152,9 +152,9 @@ $genderList      = $this->customlib->getGender_Patient();
 
 									<div class="col-sm-3">
 										<div class="form-group form-check" style="position: relative; overflow:visible !important">
-											<input type="checkbox" class="form-check-input hidden" name="isPatientNew" id="isPatientNew" value="0" checked>
-											<input type="checkbox" class="form-check-input" name="isPatientNew" id="isPatientNew2" value="1">
-											<label class="form-check-label" for="isPatientNew2">Is Patient New</label>
+											<input type="checkbox" class="form-check-input hidden" name="isPatientNew" id="isPatientNew" value="1" checked>
+											<input type="checkbox" class="form-check-input" name="isPatientNew" id="isPatientNew2" value="0">
+											<label class="form-check-label" for="isPatientNew2">Is Patient old</label>
 											<span class="text-danger"><?php echo form_error('isPatientNew'); ?></span>
 										</div>
 									</div>
