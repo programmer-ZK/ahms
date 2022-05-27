@@ -28,6 +28,7 @@ $genderList      = $this->customlib->getGender_Patient();
 							<table class="table table-striped table-bordered table-hover ajaxlist" data-export-title="<?php echo $this->lang->line('appointment_details'); ?>">
 								<thead>
 									<tr>
+										<!-- <th>Token</th> -->
 										<th><?php echo $this->lang->line('patient_name'); ?></th>
 										<th><?php echo $this->lang->line('appointment_no'); ?></th>
 										<th><?php echo $this->lang->line('appointment_date'); ?></th>
@@ -148,6 +149,16 @@ $genderList      = $this->customlib->getGender_Patient();
 
 										</div>
 									</div>
+
+									<div class="col-sm-3">
+										<div class="form-group form-check" style="position: relative; overflow:visible !important">
+											<input type="checkbox" class="form-check-input hidden" name="isPatientNew" id="isPatientNew" value="0" checked>
+											<input type="checkbox" class="form-check-input" name="isPatientNew" id="isPatientNew2" value="1">
+											<label class="form-check-label" for="isPatientNew2">Is Patient New</label>
+											<span class="text-danger"><?php echo form_error('isPatientNew'); ?></span>
+										</div>
+									</div>
+
 									<div class="col-md-3" style="display: none;">
 										<div class="form-group">
 											<label for="slot"><?php echo $this->lang->line('slot'); ?></label>

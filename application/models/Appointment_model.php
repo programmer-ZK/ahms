@@ -2,7 +2,7 @@
 
 if (!defined('BASEPATH')) {
   exit('No direct script access allowed');
-} 
+}
 
 class Appointment_model extends MY_Model
 {
@@ -20,6 +20,25 @@ class Appointment_model extends MY_Model
     }
   }
 
+  public function oldPatientFee($id)
+  {
+    $query = $this->db->query("SELECT name FROM `ahmsdb`.`staff` WHERE `id` = '$id' ORDER BY id DESC LIMIT 1");
+    $ret = $query->row();
+    $doc_name = $ret->name;
+
+
+    $query = $this->db->query("SELECT id FROM `ahmsdb`.`charge_units` WHERE `unit` = 'old patient fee' ORDER BY id DESC LIMIT 1");
+    $ret = $query->row();
+    $charge_units_id = $ret->id;
+
+
+    $query = $this->db->query("SELECT standard_charge FROM `ahmsdb`.`charges` Where `name` = '$doc_name' AND `charge_unit_id` = '$charge_units_id' ORDER BY id DESC LIMIT 1");
+    $ret = $query->row();
+    $standard_charge = $ret->standard_charge;
+
+    return $standard_charge;
+  }
+
   //========================================================================================
   public function add($appointment)
   {
@@ -27,7 +46,7 @@ class Appointment_model extends MY_Model
     // return $this->db->insert_id();
     $insert_id = $this->db->insert_id();
     $message   = INSERT_RECORD_CONSTANT . " On Appointment Created " . $insert_id;
-    
+
     $action    = "Insert";
     $record_id = $insert_id;
     $this->log($message, $record_id, $action);

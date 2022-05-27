@@ -102,7 +102,7 @@ class Appointment extends Admin_Controller
         'appointment_status' => form_error('appointment_status'),
         'cheque_no'          => form_error('cheque_no'),
         'cheque_date'        => form_error('cheque_date'),
-        'document'        => form_error('document'),
+        'document'           => form_error('document'),
 
       );
       if (!empty($custom_fields)) {
@@ -128,22 +128,24 @@ class Appointment extends Admin_Controller
       $patient_id   = $this->input->post('patient_id');
       $consult      = $this->input->post('live_consult');
       $cheque_date  = $this->customlib->dateFormatToYYYYMMDD($this->input->post("cheque_date"));
-      $doc_id = $this->input->post('doctorid');
-      $last_token = $this->appointment_model->last_token($doc_id);
+      $doc_id       = $this->input->post('doctorid');
+      $isPatientNew = $this->input->post('isPatientNew');
+      $last_token   = $this->appointment_model->last_token($doc_id);
 
       $appointment = array(
-        'patient_id'         => $patient_id,
-        'token_id'           => $last_token,
-        'date'               => $date_appoint,
-        'priority'           => $this->input->post('priority'),
-        'doctor'             => $doc_id,
-        'message'            => $this->input->post('message'),
-        'global_shift_id'    => $this->input->post('global_shift'),
-        'shift_id'           => $this->input->post('slot'),
-        'is_queue'           => 0,
-        'live_consult'       => $consult,
-        'source'             => 'Offline',
-        'appointment_status' => "approved",
+        'patient_id'         =>     $patient_id,
+        'token_id'           =>     $last_token,
+        'isPatientNew'       =>     $isPatientNew,
+        'date'               =>     $date_appoint,
+        'priority'           =>     $this->input->post('priority'),
+        'doctor'             =>     $doc_id,
+        'message'            =>     $this->input->post('message'),
+        'global_shift_id'    =>     $this->input->post('global_shift'),
+        'shift_id'           =>     $this->input->post('slot'),
+        'is_queue'           =>     0,
+        'live_consult'       =>     $consult,
+        'source'             =>     'Offline',
+        'appointment_status' =>     "approved",
       );
 
 
@@ -309,6 +311,7 @@ class Appointment extends Admin_Controller
 
   public function printAppointmentBill()
   {
+
     $print_details         = $this->printing_model->get('', 'opd');
     $data["print_details"] = $print_details;
     $id     = $this->input->post("appointment_id");
@@ -320,7 +323,11 @@ class Appointment extends Admin_Controller
     $result["patients_name"]       = composePatientName($result['patients_name'], $result['patient_id']);
     $result["edit_live_consult"]   = $this->lang->line($result['live_consult']);
     $result["live_consult"]        = $result['live_consult'];
-    $result["token_id"]        = $result['token_id'];
+    $result["token_id"]            = $result['token_id'];
+
+    $result['oldPatientFee']       = $this->appointment_model->oldPatientFee($result['doctor']);
+    $result['isPatientNew']        = $result['isPatientNew'];
+
     $result['amount']              = amountFormat($result['paid_amount']);
     $result["date"]                = $this->customlib->YYYYMMDDHisTodateFormat($result['date'], $this->time_format);
     $result['custom_fields_value'] = display_custom_fields('appointment', $id);
@@ -331,6 +338,7 @@ class Appointment extends Admin_Controller
     $data['appointment_id']        = $id;
     $data['fields']                = $this->customfield_model->get_custom_fields('appointment');
     $data['result']                = $result;
+    
     $page = $this->load->view('patient/printAppointment', $data, true);
     echo json_encode(array('status' => 1, 'page' => $page));
   }
