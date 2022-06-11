@@ -843,7 +843,7 @@ This Function is used to Add Patient
 		$custom_fields = $this->customfield_model->getByBelong('patient');
 
 		if ((int) $_POST['age']['day'] == 0 && (int) $_POST['age']['month'] == 0 && (int) $_POST['age']['year'] == 0) {
-			$this->form_validation->set_rules('age', $this->lang->line('age'), 'trim|required|xss_clean|');
+			// $this->form_validation->set_rules('age', $this->lang->line('age'), 'trim|required|xss_clean|');
 		}
 
 		foreach ($custom_fields as $custom_fields_key => $custom_fields_value) {
@@ -857,9 +857,9 @@ This Function is used to Add Patient
 		$this->form_validation->set_rules('email', $this->lang->line('email'), 'trim|valid_email|xss_clean');
 		$this->form_validation->set_rules('mobileno', $this->lang->line('phone'), 'trim|numeric|xss_clean');
 		$this->form_validation->set_rules('name', $this->lang->line('name'), 'trim|required|xss_clean');
-		$this->form_validation->set_rules('age[year]', $this->lang->line('year'), 'trim|required|xss_clean|numeric');
-		$this->form_validation->set_rules('age[month]', $this->lang->line('month'), 'trim|required|xss_clean|numeric');
-		$this->form_validation->set_rules('age[day]', $this->lang->line('day'), 'trim|required|xss_clean|numeric');
+		// $this->form_validation->set_rules('age[year]', $this->lang->line('year'), 'trim|required|xss_clean|numeric');
+		// $this->form_validation->set_rules('age[month]', $this->lang->line('month'), 'trim|required|xss_clean|numeric');
+		// $this->form_validation->set_rules('age[day]', $this->lang->line('day'), 'trim|required|xss_clean|numeric');
 		$this->form_validation->set_rules('file', $this->lang->line('image'), 'callback_handle_upload');
 
 		if ($this->form_validation->run() == false) {

@@ -133,7 +133,7 @@ $genderList      = $this->customlib->getGender_Patient();
 									</div>
 									<div class="col-sm-3">
 										<div class="form-group">
-											<label for="pwd"><?php echo $this->lang->line('shift'); ?></label><span class="req"> *</span>
+											<label for="pwd"><?php echo $this->lang->line('shift'); ?></label>
 											<select name="global_shift" id="global_shift" class="select2" style="width:100%">
 												<option value=""><?php echo $this->lang->line('select'); ?></option>
 											</select>
@@ -142,7 +142,7 @@ $genderList      = $this->customlib->getGender_Patient();
 									<div class="col-sm-3">
 										<div class="form-group" style="position: relative; overflow:visible !important">
 											<label><?php echo $this->lang->line('appointment_date'); ?></label>
-											<small class="req"> *</small>
+											
 											<input type="text" id="datetimepicker" name="date" class="form-control datetime appointment_date">
 											<span class="text-danger"><?php echo form_error('date'); ?></span>
 

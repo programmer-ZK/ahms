@@ -85,10 +85,10 @@ class Appointment extends Admin_Controller
       }
     }
 
-    $this->form_validation->set_rules('date', $this->lang->line('appointment_date'), 'trim|required|xss_clean');
+    // $this->form_validation->set_rules('date', $this->lang->line('appointment_date'), 'trim|required|xss_clean');
     $this->form_validation->set_rules('doctorid', $this->lang->line('doctor'), 'trim|required|xss_clean');
     $this->form_validation->set_rules('patient_id', $this->lang->line('patient'), 'trim|required|xss_clean');
-    $this->form_validation->set_rules('global_shift', $this->lang->line('shift'), 'trim|required');
+    // $this->form_validation->set_rules('global_shift', $this->lang->line('shift'), 'trim|required');
     // $this->form_validation->set_rules('appointment_status', $this->lang->line('status'), 'trim|required|xss_clean');
 
     if ($this->form_validation->run() == false) {
